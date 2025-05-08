@@ -107,17 +107,19 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
                 const BuildHeadingWidget(text: "Loading Avatars"),
                 // Show a loading indicator or the avatar data
                 isLoading
-                    ? Image.asset(
-                        height: 250,
-                        width: 250,
-                        "assets/images/3d/ezgif.com-gif-maker (1).gif",
-                        fit: BoxFit.fill,
+                    ? Center(
+                        child: SizedBox(
+                          width: width / 2,
+                          child: Image.asset(
+                              "assets/Gifs/White PP Logo Animation.gif"),
+                        ),
                       )
-                    : Image.asset(
-                        height: 250,
-                        width: 250,
-                        "assets/images/3d/ezgif.com-gif-maker (1).gif",
-                        fit: BoxFit.fill,
+                    : Center(
+                        child: SizedBox(
+                          width: width / 2,
+                          child: Image.asset(
+                              "assets/Gifs/White PP Logo Animation.gif"),
+                        ),
                       ),
                 const SizedBox(
                   height: 50,
