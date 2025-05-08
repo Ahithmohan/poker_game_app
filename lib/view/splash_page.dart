@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _checkDeviceAndNavigate() async {
-    await Future.delayed(const Duration(seconds: 6)); // optional splash delay
+    await Future.delayed(const Duration(seconds: 2)); // optional splash delay
     // if (!mounted) return;
 
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -48,24 +48,27 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          width: ScreenSize.screenWidth,
-          height: ScreenSize.screenHeight,
-          child: Image.asset(
-            "assets/images/background.jpg",
-            fit: BoxFit.cover,
-          ),
-        ),
-        Center(
+    final width = MediaQuery.sizeOf(context).width;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          SizedBox(
+            width: ScreenSize.screenWidth,
+            height: ScreenSize.screenHeight,
             child: Image.asset(
-          "assets/images/3d/ezgif.com-gif-maker (1).gif",
-          width: 270,
-          height: 380,
-          fit: BoxFit.fill,
-        ))
-      ],
+              "assets/images/background.jpg",
+              fit: BoxFit.cover,
+            ),
+          ),
+          Center(
+            child: SizedBox(
+              width: width / 2,
+              child: Image.asset("assets/Gifs/White PP Logo Animation.gif"),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
