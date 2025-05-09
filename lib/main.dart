@@ -11,7 +11,14 @@ import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/provider/register_provider.dart';
 import 'package:pokerpad/provider/second_avatar_provider.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
+import 'package:pokerpad/view/front_camera_page.dart';
+import 'package:pokerpad/view/image_scroll_page.dart';
+import 'package:pokerpad/view/name_page.dart';
+import 'package:pokerpad/view/phone_number_page.dart';
+import 'package:pokerpad/view/register_page.dart';
 import 'package:pokerpad/view/splash_page.dart';
+import 'package:pokerpad/view/text_page.dart';
+import 'package:pokerpad/view/verify_email_page.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/chartline_controller.dart';
@@ -68,6 +75,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/email': (context) => const RegisterPage(),
+        '/otp': (context) => const VerifyEmailPage(),
+        '/gender': (context) => const ImageScrollPage(),
+        '/photo': (context) => const FrontCameraPage(),
+        '/name': (context) => const NamePage(),
+        '/phone': (context) => const PhoneNumberPage(),
+        '/finish': (context) => const TextPage(),
+      },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

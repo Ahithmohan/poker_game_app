@@ -480,7 +480,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const Spacer(),
                     const BuildSubHeadingText(
-                      text: "Version:2.0.0",
+                      text: "Version:2.1.0",
                       fontSize: 10,
                       color: Colors.black26,
                     )

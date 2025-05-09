@@ -145,10 +145,11 @@ class LoginProvider extends ChangeNotifier {
       print("balance;$playerBalance");
 
       final appVersionStr = playerDetails?.data?.appVersion ?? "0";
+      print("appverison:$appVersionStr");
       final appVersion = int.tryParse(appVersionStr) ?? 0;
       final appUrl = playerDetails?.data?.appUrl ?? "";
 
-      if (appVersion > 2 && appUrl.isNotEmpty) {
+      if (appVersion > 2.1 && appUrl.isNotEmpty) {
         // ScaffoldMessenger.of(context).showSnackBar(
         //   SnackBar(
         //     elevation: 10,
@@ -164,20 +165,72 @@ class LoginProvider extends ChangeNotifier {
         return;
       }
 
-      Navigator.pushReplacement(
-        context,
-        PageTransition(
-          child: LobbyPage(
-            kycStatus: Map<String, String>.from(kycStatus),
-            avatarStatus: Map<String, String>.from(updateAvatar),
-            playerResponse: playerDetails,
-            playerBalance: playerDetails?.data?.balance.toString(),
-            avatar: playerDetails!.data!.lobbyAvatar ?? "",
-          ),
-          type: PageTransitionType.rightToLeftWithFade,
-        ),
-      );
-    } else if (response["data"]["status"] == "FAIL") {
+   //   👇 NEW: Get the current registration step from the server
+      final int currentStep = playerDetails?.data?.step ?? 99;
+      final int playerId = playerDetails?.data?.id ?? 0;
+      print("Player ID: $playerId");
+      print("Current Step: $currentStep");
+
+    //   Navigator.pushReplacement(
+    //     context,
+    //     PageTransition(
+    //       child: LobbyPage(
+    //         kycStatus: Map<String, String>.from(kycStatus),
+    //         avatarStatus: Map<String, String>.from(updateAvatar),
+    //         playerResponse: playerDetails,
+    //         playerBalance: playerDetails?.data?.balance.toString(),
+    //         avatar: playerDetails!.data!.lobbyAvatar ?? "",
+    //       ),
+    //       type: PageTransitionType.rightToLeftWithFade,
+    //     ),
+    //   );
+    // }
+//    👇 NEW: Navigate based on the step
+      switch (currentStep) {
+        case 99:
+          Navigator.pushReplacement(
+            context,
+            PageTransition(
+              child: LobbyPage(
+                kycStatus: Map<String, String>.from(kycStatus),
+                avatarStatus: Map<String, String>.from(updateAvatar),
+                playerResponse: playerDetails,
+                playerBalance: playerDetails?.data?.balance.toString(),
+                avatar: playerDetails!.data!.lobbyAvatar ?? "",
+              ),
+              type: PageTransitionType.rightToLeftWithFade,
+            ),
+          );
+          break;
+
+        case 1:
+          Navigator.pushReplacementNamed(context, '/email');
+          break;
+        case 2:
+          // Navigator.pushReplacementNamed(context, '/otp');
+          Navigator.pushReplacementNamed(context, '/otp',
+              arguments: {'playerId': playerId});
+          break;
+        case 3:
+          Navigator.pushReplacementNamed(context, '/gender',
+              arguments: {'playerId': playerId});
+          break;
+        case 4:
+          Navigator.pushReplacementNamed(context, '/photo');
+
+        case 10:
+          Navigator.pushReplacementNamed(context, '/finish');
+          break;
+
+        default:
+          print("Unhandled step: $currentStep");
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Unknown registration step")),
+          );
+      }
+    }
+
+    else if (response["data"]["status"] == "FAIL") {
       // Login failed, update errorMessage
       this.errorMessage = response["data"]["message"] ?? "Login Failed";
       isLoading = false;

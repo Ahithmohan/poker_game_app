@@ -5,12 +5,14 @@ import 'package:pokerpad/view/scroll_pages/accessories_page.dart';
 import 'package:pokerpad/view/scroll_pages/face_check_page.dart';
 import 'package:pokerpad/view/scroll_pages/light_page.dart';
 import 'package:pokerpad/view/scroll_pages/posture_page.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
 import '../controller/gender_controller.dart';
 import '../controller/signup_controller.dart';
 import '../model/players_gender_request_model.dart';
 import '../model/players_gender_response_model.dart';
+import '../provider/login_provider.dart';
 import '../widget/build_heading_widget.dart';
 import '../widget/build_text_widget.dart';
 
@@ -31,6 +33,19 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
   final GenderController _genderController = GenderController();
 
   void genderSelect(String gender) async {
+    final userId = SignupController.userId;
+    // if (userId == null) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text("User ID is missing")),
+    //   );
+    //   return;
+    // }
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final deviceId = loginProvider.deviceId;
+    final loginId = loginProvider.playerId;
+    print("login id :$loginId");
+    //I/flutter (30972): Player ID: 469
+
     setState(() {
       isLoading = true;
     });
@@ -38,7 +53,7 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
     PlayersGenderRequestModel request = PlayersGenderRequestModel(
       gender: gender,
       deviceId: 1,
-      id: SignupController.userId!.toInt(),
+      id: (SignupController.userId ?? loginId)!.toInt(),
     );
 
     PlayersGenderResponseModel? response =

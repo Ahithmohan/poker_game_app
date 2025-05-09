@@ -8,14 +8,10 @@ import 'package:pokerpad/widget/build_text_widget.dart';
 import '../constants/screen_size.dart';
 
 class VerifyEmailPage extends StatefulWidget {
-  final String email;
-  final String deviceId;
-  final int id;
-  const VerifyEmailPage(
-      {super.key,
-      required this.email,
-      required this.deviceId,
-      required this.id});
+  final String? email;
+  final String? deviceId;
+  final int? id;
+  const VerifyEmailPage({super.key, this.email, this.deviceId, this.id});
 
   @override
   State<VerifyEmailPage> createState() => _VerifyEmailPageState();
@@ -53,10 +49,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
     final otp = _otpControllers.map((controller) => controller.text).join();
     final requestModel = VerificationRequestModel(
-      email: widget.email,
+      email: widget.email.toString(),
       otp: otp,
-      deviceId: widget.deviceId,
-      id: widget.id,
+      deviceId: widget.deviceId.toString(),
+      id: widget.id ?? 0,
     );
 
     final response = await _verificationController.verify(requestModel);

@@ -9,6 +9,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/view/front_camera_page.dart';
 import 'package:pokerpad/view/name_page.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/login_provider.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
   final String imagePath;
@@ -31,6 +34,10 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
   }
 
   Future<void> uploadImage() async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final deviceId = loginProvider.deviceId;
+    final loginId = loginProvider.playerId;
+    print("login id :$loginId");
     try {
       setState(() {
         _isUploading = true;
@@ -41,21 +48,23 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
       _base64String = base64String;
       // log("Base64 String: $_base64String");
       // Get the userId from SignupController
-      String userId = SignupController.userId.toString();
+      String userId = (SignupController.userId ?? loginId)!.toString();
+      print("userrrrridd:$userId");
 
       // API URL
       String apiUrl =
           "http://3.6.170.253:1080/server.php/api/v1/players/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
+      print("apiUrl:$apiUrl");
 
       Map<String, dynamic> requestBody = {
         "photo": base64String,
         "id": userId,
         "deviceId": 1
       };
-      // print("00000");
-      // print(apiUrl);
-      // print(userId);
-      // print(requestBody["id"]);
+      print("00000");
+      print(apiUrl);
+      print(userId);
+      print(requestBody["id"]);
       final response = await http.put(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
