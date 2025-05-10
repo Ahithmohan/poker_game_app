@@ -165,26 +165,28 @@ class LoginProvider extends ChangeNotifier {
         return;
       }
 
-   //   👇 NEW: Get the current registration step from the server
-      final int currentStep = playerDetails?.data?.step ?? 99;
+      //   👇 NEW: Get the current registration step from the server
+      int currentStep = playerDetails?.data?.step ?? 99;
+      currentStep += 1; // Increment step by 1
+
       final int playerId = playerDetails?.data?.id ?? 0;
       print("Player ID: $playerId");
       print("Current Step: $currentStep");
 
-    //   Navigator.pushReplacement(
-    //     context,
-    //     PageTransition(
-    //       child: LobbyPage(
-    //         kycStatus: Map<String, String>.from(kycStatus),
-    //         avatarStatus: Map<String, String>.from(updateAvatar),
-    //         playerResponse: playerDetails,
-    //         playerBalance: playerDetails?.data?.balance.toString(),
-    //         avatar: playerDetails!.data!.lobbyAvatar ?? "",
-    //       ),
-    //       type: PageTransitionType.rightToLeftWithFade,
-    //     ),
-    //   );
-    // }
+      //   Navigator.pushReplacement(
+      //     context,
+      //     PageTransition(
+      //       child: LobbyPage(
+      //         kycStatus: Map<String, String>.from(kycStatus),
+      //         avatarStatus: Map<String, String>.from(updateAvatar),
+      //         playerResponse: playerDetails,
+      //         playerBalance: playerDetails?.data?.balance.toString(),
+      //         avatar: playerDetails!.data!.lobbyAvatar ?? "",
+      //       ),
+      //       type: PageTransitionType.rightToLeftWithFade,
+      //     ),
+      //   );
+      // }
 //    👇 NEW: Navigate based on the step
       switch (currentStep) {
         case 99:
@@ -208,12 +210,10 @@ class LoginProvider extends ChangeNotifier {
           break;
         case 2:
           // Navigator.pushReplacementNamed(context, '/otp');
-          Navigator.pushReplacementNamed(context, '/otp',
-              arguments: {'playerId': playerId});
+          Navigator.pushReplacementNamed(context, '/otp');
           break;
         case 3:
-          Navigator.pushReplacementNamed(context, '/gender',
-              arguments: {'playerId': playerId});
+          Navigator.pushReplacementNamed(context, '/gender');
           break;
         case 4:
           Navigator.pushReplacementNamed(context, '/photo');
@@ -228,9 +228,7 @@ class LoginProvider extends ChangeNotifier {
             const SnackBar(content: Text("Unknown registration step")),
           );
       }
-    }
-
-    else if (response["data"]["status"] == "FAIL") {
+    } else if (response["data"]["status"] == "FAIL") {
       // Login failed, update errorMessage
       this.errorMessage = response["data"]["message"] ?? "Login Failed";
       isLoading = false;

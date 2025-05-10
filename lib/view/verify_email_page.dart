@@ -4,8 +4,10 @@ import 'package:pokerpad/controller/verification_controller.dart';
 import 'package:pokerpad/model/verification_request_model.dart';
 import 'package:pokerpad/view/image_scroll_page.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
+import '../provider/login_provider.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   final String? email;
@@ -28,6 +30,13 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   );
 
   Future<void> verify() async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final deviceId = loginProvider.deviceId;
+    final loginId = loginProvider.playerId;
+    final loginEmail = loginProvider.playerDetails?.data?.email;
+    print("login id :$loginId");
+    print("login email :$loginEmail");
+    print("login device id :$deviceId");
     setState(() {
       _errorText = null; // Reset error message
     });
@@ -49,10 +58,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
     final otp = _otpControllers.map((controller) => controller.text).join();
     final requestModel = VerificationRequestModel(
-      email: widget.email.toString(),
+      email: widget.email ?? loginEmail!,
       otp: otp,
-      deviceId: widget.deviceId.toString(),
-      id: widget.id ?? 0,
+      deviceId: widget.deviceId ?? deviceId,
+      id: widget.id ?? loginId!,
     );
 
     final response = await _verificationController.verify(requestModel);

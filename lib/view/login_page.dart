@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/constants/screen_size.dart';
 import 'package:pokerpad/view/register_page.dart';
@@ -241,6 +242,12 @@ class _LoginPageState extends State<LoginPage> {
   //     });
   //   }
   // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
 
   final _formKey = GlobalKey<FormState>();
 

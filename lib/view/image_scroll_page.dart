@@ -33,13 +33,6 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
   final GenderController _genderController = GenderController();
 
   void genderSelect(String gender) async {
-    final userId = SignupController.userId;
-    // if (userId == null) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text("User ID is missing")),
-    //   );
-    //   return;
-    // }
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     final deviceId = loginProvider.deviceId;
     final loginId = loginProvider.playerId;

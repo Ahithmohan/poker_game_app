@@ -13,7 +13,6 @@ class PhoneNumberPage extends StatefulWidget {
 }
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -201,7 +200,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 40),
                   const BuildTextWidget(
                     text: "Country Code",
                     fontSize: 28,
@@ -209,7 +208,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                     color: Colors.black54,
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 30,
                   ),
                   // BuildTextWidget(
                   //   text: "Country Code",
@@ -263,7 +262,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
 
                   // ListView inside a scrollable container
                   Container(
-                    width: width / 1.4,
+                    width: width / 1.3,
                     height: height / 1.3,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -281,7 +280,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.grey)))
                             : Padding(
-                                padding: const EdgeInsets.all(18.0),
+                                padding: EdgeInsets.all(10),
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: provider.filteredCountries.length,

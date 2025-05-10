@@ -273,7 +273,7 @@ class _TermsPageState extends State<TermsPage> {
                           : Image.asset(
                               "assets/images/enter_pokerpad_button.png")))),
           const SizedBox(
-            height: 20,
+            height: 40,
           )
         ],
       ),
