@@ -43,6 +43,7 @@ class LobbyPage extends StatefulWidget {
 class _LobbyPageState extends State<LobbyPage> {
   // String balance = "0.00";
   int selected_button = 1;
+  int select_info = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -189,6 +190,9 @@ class _LobbyPageState extends State<LobbyPage> {
                   GestureDetector(
                     onTap: () {
                       print("clicked info button");
+                      setState(() {
+                        select_info = 1;
+                      });
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -197,8 +201,10 @@ class _LobbyPageState extends State<LobbyPage> {
                         },
                       );
                     },
-                    child: const BuildIconImageWidget(
-                        imgName: "assets/images/lobby/info button active.png"),
+                    child: BuildIconImageWidget(
+                        imgName: select_info == 1
+                            ? "assets/images/lobby/info button active.png"
+                            : "assets/images/lobby/info button active.png"),
                   ),
                   GestureDetector(
                     onTap: () {},
