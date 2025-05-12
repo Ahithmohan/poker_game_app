@@ -27,7 +27,7 @@ class _PickSecondaryAvatarState extends State<PickSecondaryAvatar> {
   Future<void> _fetchAvatarData() async {
     try {
       GetAvatarController getAvatarController = GetAvatarController();
-      final response = await getAvatarController.getAvatar();
+      final response = await getAvatarController.getAvatar(context);
       if (response != null) {
         final secondaryAvatars = response.data.secondary;
         List<String> tempAvatars = [

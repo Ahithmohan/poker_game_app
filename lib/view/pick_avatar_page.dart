@@ -28,7 +28,7 @@ class _PickAvatarPageState extends State<PickAvatarPage> {
   Future<void> _fetchAvatarData() async {
     try {
       GetAvatarController getAvatarController = GetAvatarController();
-      final response = await getAvatarController.getAvatar();
+      final response = await getAvatarController.getAvatar(context);
       if (response != null) {
         final primaryAvatars = response.data.primary;
         List<String> tempAvatars = [

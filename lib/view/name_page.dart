@@ -36,7 +36,8 @@ class _NamePageState extends State<NamePage> {
 
       NameRequestModel request =
           NameRequestModel(nickname: nameController.text, deviceId: 1);
-      NameResponseModel? response = await _nameController.getName(request);
+      NameResponseModel? response =
+          await _nameController.getName(request, context);
 
       if (response?.status == "OK") {
         print("Step:${response?.data?.step}");

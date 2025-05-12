@@ -126,7 +126,6 @@ class _GameViewState extends State<GameView> {
       final dir = await getApplicationDocumentsDirectory();
       final zipFilePath = '${dir.path}/poker.zip';
       final zipFile = File(zipFilePath);
-
       if (!isZipDownloaded) {
         debugPrint('Starting ZIP file download from: $url');
         final response = await http.get(Uri.parse(url));

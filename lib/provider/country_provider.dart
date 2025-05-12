@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/view/loading_avatar_page.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/country_list.dart';
+import 'login_provider.dart';
 
 class CountryProvider extends ChangeNotifier {
   String _countryCode = "+1"; // Default country code
@@ -78,7 +80,10 @@ class CountryProvider extends ChangeNotifier {
   //Api call
 
   Future<void> sentPhoneNumber(BuildContext context) async {
-    final id = SignupController.userId;
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final loginId = loginProvider.playerId;
+    print("login id :$loginId");
+    final id = SignupController.userId ?? loginId;
     final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$id";
 
     print("url:$url");
@@ -121,53 +126,54 @@ class CountryProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-Future<void> updatePhoneNumbe(
-  BuildContext context,
-  int userId,
-  String newPhoneNumber,
-) async {
-  final String url = "http://3.6.170.253:1080/server.php/api/v1/players/$userId";
 
-  print("🔄 Updating phone number at: $url");
+  Future<void> updatePhoneNumbe(
+    BuildContext context,
+    int userId,
+    String newPhoneNumber,
+  ) async {
+    final String url =
+        "http://3.6.170.253:1080/server.php/api/v1/players/$userId";
 
-  _isLoading = true;
-  notifyListeners();
+    print("🔄 Updating phone number at: $url");
 
-  try {
-    if (_deviceId == "Fetching...") {
-      await _getStoredDeviceId();
-    }
-
-    final response = await Dio().put(
-      url,
-      data: {
-        "phone": newPhoneNumber,
-        "ph_country_code": _countryCode,
-        "country": _countryName,
-        "deviceId": _deviceId,
-      },
-      options: Options(headers: {
-        "Content-Type": "application/json",
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print("✅ Phone number updated successfully: ${response.data}");
-      _phoneNumber = newPhoneNumber;
-      _apiResponse = "Phone updated: ${response.data}";
-      notifyListeners();
-    } else {
-      print("⚠️ Failed to update phone: ${response.statusCode} - ${response.data}");
-      _apiResponse = "Error: ${response.data}";
-    }
-  } catch (e) {
-    print("❌ Exception while updating phone: $e");
-    _apiResponse = "Exception: $e";
-  } finally {
-    _isLoading = false;
+    _isLoading = true;
     notifyListeners();
+
+    try {
+      if (_deviceId == "Fetching...") {
+        await _getStoredDeviceId();
+      }
+
+      final response = await Dio().put(
+        url,
+        data: {
+          "phone": newPhoneNumber,
+          "ph_country_code": _countryCode,
+          "country": _countryName,
+          "deviceId": _deviceId,
+        },
+        options: Options(headers: {
+          "Content-Type": "application/json",
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print("✅ Phone number updated successfully: ${response.data}");
+        _phoneNumber = newPhoneNumber;
+        _apiResponse = "Phone updated: ${response.data}";
+        notifyListeners();
+      } else {
+        print(
+            "⚠️ Failed to update phone: ${response.statusCode} - ${response.data}");
+        _apiResponse = "Error: ${response.data}";
+      }
+    } catch (e) {
+      print("❌ Exception while updating phone: $e");
+      _apiResponse = "Exception: $e";
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
-}
-
-
 }

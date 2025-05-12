@@ -1,14 +1,22 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/model/name_request_model.dart';
 import 'package:pokerpad/model/name_response_model.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/login_provider.dart';
 
 class NameController {
   final String baseUrl = "http://3.6.170.253:1080/server.php/api/v1/players/";
 
-  Future<NameResponseModel?> getName(NameRequestModel requestModel) async {
+  Future<NameResponseModel?> getName(
+      NameRequestModel requestModel, BuildContext context) async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final loginId = loginProvider.playerId;
+    print("login id :$loginId");
     String url =
-        "$baseUrl${SignupController.userId}?XDEBUG_SESSION_START=netbeans-xdebug";
+        "$baseUrl${SignupController.userId ?? loginId}?XDEBUG_SESSION_START=netbeans-xdebug";
 
     try {
       final response = await Dio().put(url,

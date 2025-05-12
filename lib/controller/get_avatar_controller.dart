@@ -1,14 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pokerpad/controller/signup_controller.dart';
 import 'package:pokerpad/model/get_avatar_response_model.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/login_provider.dart';
 
 class GetAvatarController {
   final String baseUrl =
       "http://3.6.170.253:1080/server.php/api/v1/avatar-list/";
 
-  Future<GetAvatarResponseModel?> getAvatar() async {
+  Future<GetAvatarResponseModel?> getAvatar(BuildContext context) async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final loginId = loginProvider.playerId;
     String url =
-        "$baseUrl${SignupController.userId}?XDEBUG_SESSION_START=netbeans-xdebug";
+        "$baseUrl${SignupController.userId ?? loginId}?XDEBUG_SESSION_START=netbeans-xdebug";
     print(url);
     try {
       final response = await Dio().get(

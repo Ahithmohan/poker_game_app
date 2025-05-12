@@ -189,7 +189,7 @@ class LoginProvider extends ChangeNotifier {
       // }
 //    👇 NEW: Navigate based on the step
       switch (currentStep) {
-        case 99:
+        case 100:
           Navigator.pushReplacement(
             context,
             PageTransition(
@@ -217,10 +217,27 @@ class LoginProvider extends ChangeNotifier {
           break;
         case 4:
           Navigator.pushReplacementNamed(context, '/photo');
-
-        case 10:
-          Navigator.pushReplacementNamed(context, '/finish');
+        case 5:
+          Navigator.pushReplacementNamed(context, '/name');
           break;
+        case 6:
+          Navigator.pushReplacementNamed(context, '/phone');
+          break;
+        case 7:
+          Navigator.pushReplacementNamed(context, '/primaryAvatar');
+          break;
+        case 8:
+          Navigator.pushReplacementNamed(context, '/secondaryAvatar');
+          break;
+        case 9:
+          Navigator.pushReplacementNamed(context, '/kycId');
+          break;
+        case 10:
+          Navigator.pushReplacementNamed(context, '/terms');
+
+        // case 99:
+        //   Navigator.pushReplacementNamed(context, '/finish');
+        //   break;
 
         default:
           print("Unhandled step: $currentStep");

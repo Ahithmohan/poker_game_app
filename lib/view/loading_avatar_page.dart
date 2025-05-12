@@ -44,7 +44,7 @@ class _LoadingAvatarPageState extends State<LoadingAvatarPage> {
       isLoading = true; // Trigger a rebuild and show loading state
     });
 
-    final avatarData = await _getAvatarController.getAvatar();
+    final avatarData = await _getAvatarController.getAvatar(context);
     if (avatarData != null && avatarData.status == "OK") {
       print("Avatar fetched successfully: ${avatarData.status}");
       _timer.cancel();

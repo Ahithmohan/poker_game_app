@@ -7,8 +7,10 @@ import 'package:pokerpad/model/terms_response_model.dart';
 import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/widget/build_heading_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
+import '../provider/login_provider.dart';
 
 class TermsPage extends StatefulWidget {
   const TermsPage({super.key});
@@ -24,6 +26,8 @@ class _TermsPageState extends State<TermsPage> {
   final TermsController _termsController = TermsController();
 
   Future<void> acceptTerms() async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final loginId = loginProvider.playerId;
     if (!checker) {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       //     elevation: 10,
@@ -65,7 +69,7 @@ class _TermsPageState extends State<TermsPage> {
       TermsRequestModel request = TermsRequestModel(
         tos: "true",
         deviceId: 1,
-        id: SignupController.userId!.toInt(),
+        id: SignupController.userId ?? loginId!,
       );
 
       TermsResponseModel? response = await _termsController.terms(request);

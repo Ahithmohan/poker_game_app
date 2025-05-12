@@ -28,7 +28,7 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
     ChooseAvatarRequestModel requestModel =
         ChooseAvatarRequestModel(secondary: widget.selectedImageUrl);
     ChooseAvatarResponseModel? responseModel =
-        await _chooseAvatarController.chooseAvatar(requestModel);
+        await _chooseAvatarController.chooseAvatar(requestModel, context);
     try {
       if (responseModel != null && responseModel.status == "OK") {
         print("Avatar upload successfully");

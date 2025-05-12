@@ -7,9 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/view/p_y_i_camera_page.dart';
 import 'package:pokerpad/view/terms_page.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
 import '../controller/signup_controller.dart';
+import '../provider/login_provider.dart';
 
 class ProofOfIdentityImageViewRegister extends StatefulWidget {
   final String imagePath;
@@ -44,7 +46,9 @@ class _ProofOfIdentityImageViewRegisterState
       _base64String = base64String;
       // log("Base64 String: $_base64String");
       // Get the userId from SignupController
-      String userId = SignupController.userId.toString();
+      final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+      final loginId = loginProvider.playerId;
+      String userId = (SignupController.userId ?? loginId).toString();
 
       // API URL
       String apiUrl =

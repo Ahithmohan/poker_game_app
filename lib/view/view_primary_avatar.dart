@@ -28,7 +28,7 @@ class _ViewPrimaryAvatarState extends State<ViewPrimaryAvatar> {
       ChooseAvatarRequestModel requestModel =
           ChooseAvatarRequestModel(primary: widget.selectedImageUrl);
       ChooseAvatarResponseModel? responseModel =
-          await _chooseAvatarController.chooseAvatar(requestModel);
+          await _chooseAvatarController.chooseAvatar(requestModel, context);
       if (responseModel != null && responseModel.status == "OK") {
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         //     duration: const Duration(milliseconds: 350),
