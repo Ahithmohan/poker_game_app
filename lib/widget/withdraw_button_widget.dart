@@ -72,38 +72,38 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
       if (response.status == "OK") {
         Navigator.pop(context);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(milliseconds: 350),
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.activeGreen,
-            content: Text(
-              "Success!: ${response.status}, ID: ${response.data?.id ?? "N/A"}",
-            ),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     duration: const Duration(milliseconds: 350),
+        //     elevation: 10,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.activeGreen,
+        //     content: Text(
+        //       "Success!: ${response.status}, ID: ${response.data?.id ?? "N/A"}",
+        //     ),
+        //   ),
+        // );
       } else {
         setState(() {
           errorMessage = " Unable to initiate redeem, Verification failed";
         });
         print("API Failure: ${response.status}, Message: ${response.messages}");
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(milliseconds: 350),
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: CupertinoColors.systemRed,
-            content: Text("Fail!: ${response.messages ?? "Unknown error"}"),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     duration: const Duration(milliseconds: 350),
+        //     elevation: 10,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     behavior: SnackBarBehavior.floating,
+        //     backgroundColor: CupertinoColors.systemRed,
+        //     content: Text("Fail!: ${response.messages ?? "Unknown error"}"),
+        //   ),
+        // );
       }
     } catch (e) {
       if (!mounted) return;
