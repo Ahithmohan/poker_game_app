@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/view/profile_phone_number.dart';
-import 'package:pokerpad/view/proof_of_identity_popUp.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:provider/provider.dart';
 
@@ -190,59 +189,117 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                             )
                           ],
                         ),
-                        (photoStatus == "Approved" && idStatus == "Approved")
-                            ? Column(
-                                children: [
-                                  SizedBox(height: 10),
-                                  Container(
-                                    height: height / 15,
-                                    width: width / 1,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        image: AssetImage(
-                                          "assets/images/profilebutton/name_field.png",
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(18.0),
-                                      child: Center(
-                                        child: BuildSubHeadingText(
-                                          text: "KYC VERIFICATION",
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                ],
-                              )
-                            : Container(
+                        // (photoStatus == "Rejected")
+                        //     ? Column(
+                        //         children: [
+                        //           Container(
+                        //             height: height / 12,
+                        //             width: width / 1,
+                        //             decoration: BoxDecoration(
+                        //               image: const DecorationImage(
+                        //                 image: AssetImage(
+                        //                     "assets/images/profilebutton/profile_alerts.png"),
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //             child: Padding(
+                        //               padding: const EdgeInsets.all(18.0),
+                        //               child: Center(
+                        //                   child: BuildSubHeadingText(
+                        //                 text:
+                        //                     "We're sorry, but your Face Check picture has not been accepted. Please review \nthe requirements and try again. If you need assistance feel free to contact our \nsupport team for guidance. Thank you for your understanding!",
+                        //                 fontSize: 10,
+                        //                 color: Colors.black,
+                        //               )),
+                        //             ),
+                        //           ),
+                        //           SizedBox(height: 10),
+                        //         ],
+                        //       )
+                        //     : Container(
+                        //         height: height / 12,
+                        //         width: width / 1,
+                        //         decoration: BoxDecoration(
+                        //           image: const DecorationImage(
+                        //             image: AssetImage(
+                        //                 "assets/images/profilebutton/profile_alerts.png"),
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         ),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.all(18.0),
+                        //           child: Center(
+                        //               child: BuildSubHeadingText(
+                        //             text:
+                        //                 "Thank you for your submission! Your Face check verification is currently in progress. Please be patient as our team reviews your picture.if you have any questions, feel free to reach out to our support team.",
+                        //             fontSize: 10,
+                        //             color: Colors.black,
+                        //           )),
+                        //         ),
+                        //       ),
+
+                        if (photoStatus == "Rejected")
+                          Column(
+                            children: [
+                              Container(
                                 height: height / 12,
-                                width: width / 1,
-                                decoration: BoxDecoration(
-                                  image: const DecorationImage(
+                                width: width,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
                                     image: AssetImage(
                                         "assets/images/profilebutton/profile_alerts.png"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(18.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(18.0),
                                   child: Center(
-                                      child: BuildSubHeadingText(
-                                    text:
-                                        "Thank you for your submission! Your KYC verification is currently in progress. Please be patient as our team reviews your documents.if you have any questions, feel free to reach out to our support team.",
-                                    fontSize: 10,
-                                    color: Colors.black,
-                                  )),
+                                    child: BuildSubHeadingText(
+                                      text:
+                                          "We're sorry, but your Face Check picture has not been accepted. Please review \nthe requirements and try again. If you need assistance feel free to contact our \nsupport team for guidance. Thank you for your understanding!",
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
                               ),
+                              const SizedBox(height: 10),
+                            ],
+                          )
+                        else if (photoStatus == "Pending")
+                          Container(
+                            height: height / 12,
+                            width: width,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/profilebutton/profile_alerts.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(18.0),
+                              child: Center(
+                                child: BuildSubHeadingText(
+                                  text:
+                                      "Thank you for your submission! Your Face check verification is currently in progress. Please be patient as our team reviews your picture. If you have any questions, feel free to reach out to our support team.",
+                                  fontSize: 10,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          )
+                        else
+                          SizedBox(
+                            height: height / 11,
+                          ),
+
+                        SizedBox(
+                          height: height / 13.5,
+                        ),
                         Row(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             GestureDetector(
@@ -296,62 +353,62 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 2,
-                            ),
-                            GestureDetector(
-                              onTap: (idStatus == "Rejected")
-                                  ? () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return ProofOfIdentityPopup(
-                                            playerResponse:
-                                                widget.playerResponse,
-                                          );
-                                        },
-                                      );
-                                    }
-                                  : null,
-                              child: Container(
-                                height: height / 15,
-                                width: width / 2.4,
-                                decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/profilebutton/kyc_field.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: Center(
-                                    child: BuildSubHeadingText(
-                                  text: "PROOF OF IDENTITY",
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                )),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 14,
-                            ),
-                            Container(
-                              height: height / 15,
-                              width: width / 2.4,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(idStatus == "Approved"
-                                      ? "assets/images/profilebutton/verified_button.png"
-                                      : idStatus == "Rejected"
-                                          ? "assets/images/profilebutton/try_again_button.png"
-                                          : "assets/images/profilebutton/pending_notification.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     SizedBox(
+                        //       width: 2,
+                        //     ),
+                        //     GestureDetector(
+                        //       onTap: (idStatus == "Rejected")
+                        //           ? () {
+                        //               showDialog(
+                        //                 context: context,
+                        //                 builder: (context) {
+                        //                   return ProofOfIdentityPopup(
+                        //                     playerResponse:
+                        //                         widget.playerResponse,
+                        //                   );
+                        //                 },
+                        //               );
+                        //             }
+                        //           : null,
+                        //       child: Container(
+                        //         height: height / 15,
+                        //         width: width / 2.4,
+                        //         decoration: BoxDecoration(
+                        //           image: const DecorationImage(
+                        //             image: AssetImage(
+                        //                 "assets/images/profilebutton/kyc_field.png"),
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         ),
+                        //         child: Center(
+                        //             child: BuildSubHeadingText(
+                        //           text: "PROOF OF IDENTITY",
+                        //           fontSize: 14,
+                        //           color: Colors.white,
+                        //         )),
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 14,
+                        //     ),
+                        //     Container(
+                        //       height: height / 15,
+                        //       width: width / 2.4,
+                        //       decoration: BoxDecoration(
+                        //         image: DecorationImage(
+                        //           image: AssetImage(idStatus == "Approved"
+                        //               ? "assets/images/profilebutton/verified_button.png"
+                        //               : idStatus == "Rejected"
+                        //                   ? "assets/images/profilebutton/try_again_button.png"
+                        //                   : "assets/images/profilebutton/pending_notification.png"),
+                        //           fit: BoxFit.cover,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   )

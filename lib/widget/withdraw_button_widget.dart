@@ -137,7 +137,7 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
     final request = ForgotPasswordRequestModel(
       email: widget.playerResponse?.data?.email ?? "",
     );
-
+    print(request.email);
     try {
       final response = await ForgotPasswordController().forgotPassword(request);
 
@@ -173,8 +173,8 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
     final qrProvider = Provider.of<QrProvider>(context);
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        // Navigator.pop(context);
       },
       child: Scaffold(
           backgroundColor: Colors.transparent,
