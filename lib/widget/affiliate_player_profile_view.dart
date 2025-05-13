@@ -37,7 +37,8 @@ class _AffiliatePlayerProfileViewState
       return;
     }
 
-    final url = "http://3.6.170.253:1080/server.php/api/v1/affiliate/$playerId";
+    final url =
+        "http://3.6.170.253:1080/server.php/api/v1/player-affiliate/$playerId";
     try {
       final response = await Dio().get(url);
       print(url);

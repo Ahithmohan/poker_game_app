@@ -105,11 +105,14 @@ class RegisterProvider extends ChangeNotifier {
     try {
       final response = await _signupController.signup(requestModel);
       isLoading = false;
+      print("Response: ${response.id}");
+
       notifyListeners();
 
       if (response.status == "OK") {
         print("Step:${response.step}");
-
+        debugPrint("Response: ${response.id}");
+        debugPrint("Step: ${response.step}");
         // ScaffoldMessenger.of(context).showSnackBar(
         //   SnackBar(
         //     elevation: 10,
@@ -121,7 +124,7 @@ class RegisterProvider extends ChangeNotifier {
         //         style: TextStyle(color: Colors.white)),
         //   ),
         // );
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           PageTransition(
             child: VerifyEmailPage(

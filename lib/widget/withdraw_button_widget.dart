@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pokerpad/controller/cashier_controller.dart';
@@ -6,7 +5,6 @@ import 'package:pokerpad/model/withdraw_request_model.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/qr_provider.dart';
 import 'package:pokerpad/view/qr_scan_page.dart';
-import 'package:pokerpad/view/withdraw_forgot_password.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -111,19 +109,19 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
       setState(() {
         isLoading = false;
       });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(milliseconds: 350),
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: CupertinoColors.systemRed,
-          content: Text("API Error: $e"),
-        ),
-      );
+      //
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     duration: const Duration(milliseconds: 350),
+      //     elevation: 10,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(24),
+      //     ),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: CupertinoColors.systemRed,
+      //     content: Text("API Error: $e"),
+      //   ),
+      // );
 
       print("API Error: $e");
     }
@@ -147,14 +145,14 @@ class _WithdrawButtonWidgetState extends State<WithdrawButtonWidget> {
 
       if (response != null) {
         print("okkkkkkkkkkkkkkkkk");
-        showDialog(
-          context: context,
-          builder: (context) {
-            return WithdrawForgotPassword(
-              playerResponse: widget.playerResponse,
-            );
-          },
-        );
+        // showDialog(
+        //   context: context,
+        //   builder: (context) {
+        //     return WithdrawForgotPassword(
+        //       playerResponse: widget.playerResponse,
+        //     );
+        //   },
+        // );
       }
     } catch (e, stackTrace) {
       setState(() {

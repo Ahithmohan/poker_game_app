@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         '/name': (context) => const NamePage(),
         '/phone': (context) => const PhoneNumberPage(),
         '/primaryAvatar': (context) => const PickAvatarPage(),
-        'secondaryAvatar': (context) => const PickSecondaryAvatar(),
+        '/secondaryAvatar': (context) => const PickSecondaryAvatar(),
         '/kycId': (context) => const PYICameraPage(),
         '/terms': (context) => const TermsPage(),
         '/finish': (context) => const TextPage(),
