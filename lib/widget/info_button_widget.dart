@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/widget/build_sub_heading_text.dart';
+import 'package:pokerpad/widget/build_text_widget.dart';
 
 class InfoButtonWidget extends StatefulWidget {
   const InfoButtonWidget({super.key});
@@ -17,12 +19,85 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
       child: Dialog(
           alignment: Alignment.topCenter,
           backgroundColor: Colors.transparent,
-          child: Image.asset(
+          child: Container(
             width: width / 1,
-            height: height / 2.1,
-            "assets/images/info_chat/house_rules_popup.png",
-            fit: BoxFit.cover,
+            height: height / 2,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover, // fit: BoxFit.fill,
+                    image: AssetImage(
+                        "assets/images/info_chat/house_rules_text_field.png"))),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 80),
+              child: Column(
+                children: [
+                  BuildSubHeadingText(
+                    text: "House Rules",
+                    fontSize: 28,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  BuildSubHeadingText(
+                    text: "Rake",
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white70,
+                  ),
+                  BuildTextWidget(
+                    align: TextAlign.center,
+                    text:
+                        "Rake is capped at 2.5% for all games\n 1% service fee for all in equity cashouts.\n no preflop rake or suprise fee of any sort",
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w100,
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  BuildSubHeadingText(
+                    text: "Table",
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white70,
+                  ),
+                  BuildTextWidget(
+                    align: TextAlign.center,
+                    text:
+                        "A minimum of five players is required for the game to start.\n"
+                        "Must Move Rule:Players with small stacks sit together,\n"
+                        "and players whith big stacks sit together.",
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w100,
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  BuildSubHeadingText(
+                    text: "Stakes",
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white70,
+                  ),
+                  BuildTextWidget(
+                    align: TextAlign.center,
+                    text: "The stakes vary betweeen\$2/\$3 and \$3/\$5.\n"
+                        "All games have a big blind ante in the amount of five big blinds.\n"
+                        "Private game stakes may differ.",
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w100,
+                  ),
+                ],
+              ),
+            ),
           )
+
+          // Image.asset(
+          //   width: width / 1,
+          //   height: height / 2.1,
+          //   "assets/images/info_chat/house_rules_popup.png",
+          //   fit: BoxFit.cover,
+          // )
 
           // Container(
           //   decoration: BoxDecoration(
