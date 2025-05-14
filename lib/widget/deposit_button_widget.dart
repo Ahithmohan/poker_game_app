@@ -210,7 +210,7 @@ class _DepositButtonWidgetState extends State<DepositButtonWidget> {
                                 //navigate to withdraw page
                                 GestureDetector(
                                   onTap: () {
-                                    // Navigator.pop(context);
+                                    Navigator.pop(context);
                                     provider.setClicked(true);
 
                                     showDialog(
