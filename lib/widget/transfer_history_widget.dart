@@ -189,6 +189,7 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                           final item =
                                               filteredTransferList[index];
                                           final createdAt = item.createdAt;
+                                          print(item.chip);
 
                                           final formattedDate =
                                               createdAt != null
@@ -304,7 +305,16 @@ class _TransferHistoryWidgetState extends State<TransferHistoryWidget> {
                                                     BuildSubHeadingText(
                                                       text:
                                                           "\$${item.chip ?? 0}",
-                                                      color: Colors.green,
+                                                      color: (item.chip !=
+                                                                  null &&
+                                                              double.tryParse(item
+                                                                      .chip!) !=
+                                                                  null &&
+                                                              double.parse(item
+                                                                      .chip!) <
+                                                                  0)
+                                                          ? Colors.red
+                                                          : Colors.green,
                                                       fontSize: 10,
                                                     ),
                                                     const SizedBox(width: 5),
