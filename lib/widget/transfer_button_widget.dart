@@ -150,6 +150,10 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
 
     return GestureDetector(
       onTap: () {
+        // Clear input values before showing the dialog
+        playerIdController.clear();
+        amountController.clear();
+        passwordController.clear();
         final provider =
             Provider.of<TransferButtonProvider>(context, listen: false);
         provider.setClick(true);
@@ -184,6 +188,11 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
 
                 if (response?.status == "OK") {
                   await _rememberPassword(passwordController.text);
+
+                  // Clear text fields after successful transfer
+                  playerIdController.clear();
+                  amountController.clear();
+                  passwordController.clear();
                   Navigator.of(context).pop();
                   showDialog(
                     context: context,
@@ -327,8 +336,18 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                       CircularProgressIndicator())
                                               : GestureDetector(
                                                   onTap: () {
-                                                    forgotPassword(
-                                                        setDialogState);
+                                                    // forgotPassword(
+                                                    //     setDialogState);
+
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return TransferForgotPasswordWidget(
+                                                          playerResponse: widget
+                                                              .playerResponse,
+                                                        );
+                                                      },
+                                                    );
                                                   },
                                                   child: const BuildTextWidget(
                                                     text: "Forgot Password",

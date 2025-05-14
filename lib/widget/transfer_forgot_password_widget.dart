@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokerpad/widget/transfer_text_field_widget.dart';
 
+import '../controller/forgot_password_controller.dart';
 import '../controller/resetpassword_controller.dart';
+import '../model/forgot_password_model.dart';
 import '../model/login_response_model.dart';
 import '../model/resetpassword_request_model.dart';
 import 'build_sub_heading_text.dart';
@@ -20,6 +22,39 @@ class TransferForgotPasswordWidget extends StatefulWidget {
 
 class _TransferForgotPasswordWidgetState
     extends State<TransferForgotPasswordWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    forgotPassword();
+  }
+
+  bool localIsLoading = false;
+
+  Future<void> forgotPassword() async {
+    setState(() {
+      localIsLoading = true;
+    });
+
+    final request = ForgotPasswordRequestModel(
+      email: widget.playerResponse?.data?.email ?? "",
+    );
+    print("forgot request email:${request.email}");
+    try {
+      final response = await ForgotPasswordController().forgotPassword(request);
+
+      setState(() {
+        localIsLoading = false;
+      });
+    } catch (e, stackTrace) {
+      setState(() {
+        localIsLoading = false;
+      });
+      debugPrint('Forgot password error: $e');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
   bool passwordVisible = true;
   String? errorMessage;
   final _formKey = GlobalKey<FormState>();

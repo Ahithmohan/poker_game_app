@@ -27,8 +27,8 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
                     fit: BoxFit.cover, // fit: BoxFit.fill,
                     image: AssetImage(
                         "assets/images/info_chat/house_rules_text_field.png"))),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 80),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 80),
               child: Column(
                 children: [
                   BuildSubHeadingText(
@@ -46,8 +46,9 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
                   ),
                   BuildTextWidget(
                     align: TextAlign.center,
-                    text:
-                        "Rake is capped at 2.5% for all games\n 1% service fee for all in equity cashouts.\n no preflop rake or suprise fee of any sort",
+                    text: "Rake is capped at 2.5% for all games\n "
+                        "1% service fee for all in equity cashouts.\n "
+                        "no preflop rake or suprise fee of any sort.",
                     color: Colors.white,
                     fontSize: 13,
                     fontWeight: FontWeight.w100,
@@ -65,7 +66,7 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
                     text:
                         "A minimum of five players is required for the game to start.\n"
                         "Must Move Rule:Players with small stacks sit together,\n"
-                        "and players whith big stacks sit together.",
+                        "and players with big stacks sit together.",
                     color: Colors.white,
                     fontSize: 13,
                     fontWeight: FontWeight.w100,
@@ -80,7 +81,7 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
                   ),
                   BuildTextWidget(
                     align: TextAlign.center,
-                    text: "The stakes vary betweeen\$2/\$3 and \$3/\$5.\n"
+                    text: "The stakes vary between\$2/\$3 and \$3/\$5.\n"
                         "All games have a big blind ante in the amount of five big blinds.\n"
                         "Private game stakes may differ.",
                     color: Colors.white,
