@@ -163,6 +163,7 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
                             isLoading
                                 ? const CircularProgressIndicator()
                                 : GestureDetector(
+                                    onTap: () {},
                                     // onTap: () => forgotPassword(),
                                     child: const BuildTextWidget(
                                       text: "Forgot Password",
