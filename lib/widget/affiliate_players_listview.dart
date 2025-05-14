@@ -47,13 +47,15 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
         widget.playerResponse?.data?.selfAffiliateId.toString();
     final url =
         'http://3.6.170.253:1080/server.php/api/v1/affiliate-players/$affiliate_id';
-    // print("affiliate player:$url");
+    print("affiliate player:$url");
     final response = await http.get(
       Uri.parse(url),
     );
 
     if (response.statusCode == 200) {
+      print("0000000000000000000000000000");
       final data = affiliatePlayerModelRespFromJson(response.body);
+      print(data.data);
       return data.data ?? [];
     } else {
       throw Exception('Failed to fetch players');
@@ -71,6 +73,7 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
+          print(snapshot.error);
           return Center(child: Text('Error: ${snapshot.error}'));
         }
 
