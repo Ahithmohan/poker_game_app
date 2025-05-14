@@ -301,7 +301,16 @@ class _AffiliateTransferHistoryPopupState
                                                     BuildSubHeadingText(
                                                       text:
                                                           "\$${item.chip ?? 0}",
-                                                      color: Colors.green,
+                                                      color: (item.chip !=
+                                                                  null &&
+                                                              double.tryParse(item
+                                                                      .chip!) !=
+                                                                  null &&
+                                                              double.parse(item
+                                                                      .chip!) <
+                                                                  0)
+                                                          ? Colors.red
+                                                          : Colors.green,
                                                       fontSize: 10,
                                                     ),
                                                     const SizedBox(width: 5),
