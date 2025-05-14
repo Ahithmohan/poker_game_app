@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,18 +44,43 @@ class _AffiliatePlayersListviewsState extends State<AffiliatePlayersListviews> {
     _futurePlayers = fetchAffiliatePlayers();
   }
 
+  // Future<List<Datum>> fetchAffiliatePlayers() async {
+  //   final affiliate_id =
+  //       widget.playerResponse?.data?.selfAffiliateId.toString();
+  //   final url =
+  //       'http://3.6.170.253:1080/server.php/api/v1/affiliate-players/$affiliate_id';
+  //   print("affiliate players:$url");
+  //   final response = await http.get(
+  //     Uri.parse(url),
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     print("0000000000000000000000000000");
+  //     log('Response body: ${response.body}'); // Correct usage of log with a String
+  //     final data = affiliatePlayerModelRespFromJson(response.body);
+  //     print(data.data);
+  //     return data.data ?? [];
+  //   } else {
+  //     throw Exception('Failed to fetch players');
+  //   }
+  // }
   Future<List<Datum>> fetchAffiliatePlayers() async {
     final affiliate_id =
-        widget.playerResponse?.data?.selfAffiliateId.toString();
+        widget.playerResponse?.data?.selfAffiliateId?.toString();
+
+    if (affiliate_id == null) {
+      throw Exception('Affiliate ID is null');
+    }
+
     final url =
         'http://3.6.170.253:1080/server.php/api/v1/affiliate-players/$affiliate_id';
-    print("affiliate player:$url");
-    final response = await http.get(
-      Uri.parse(url),
-    );
+    print("affiliate players: $url");
+
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       print("0000000000000000000000000000");
+      log('Response body: ${response.body}');
       final data = affiliatePlayerModelRespFromJson(response.body);
       print(data.data);
       return data.data ?? [];

@@ -64,9 +64,45 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
     }
   }
 
-  Future<void> forgotPassword() async {
-    setState(() {
-      isLoading = true;
+  // Future<void> forgotPassword() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   final request = ForgotPasswordRequestModel(
+  //     email: widget.playerResponse?.data?.email ?? "",
+  //   );
+  //   print("forgot request email:${request.email}");
+  //   try {
+  //     final response = await ForgotPasswordController().forgotPassword(request);
+  //
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //
+  //     if (response != null) {
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) {
+  //           return TransferForgotPasswordWidget(
+  //             playerResponse: widget.playerResponse,
+  //           );
+  //         },
+  //       );
+  //     }
+  //   } catch (e, stackTrace) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     debugPrint('Forgot password error: $e');
+  //     debugPrintStack(stackTrace: stackTrace);
+  //   }
+  // }
+  bool localIsLoading = false;
+
+  Future<void> forgotPassword(StateSetter setDialogState) async {
+    setDialogState(() {
+      localIsLoading = true;
     });
 
     final request = ForgotPasswordRequestModel(
@@ -76,8 +112,8 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
     try {
       final response = await ForgotPasswordController().forgotPassword(request);
 
-      setState(() {
-        isLoading = false;
+      setDialogState(() {
+        localIsLoading = false;
       });
 
       if (response != null) {
@@ -91,8 +127,8 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
         );
       }
     } catch (e, stackTrace) {
-      setState(() {
-        isLoading = false;
+      setDialogState(() {
+        localIsLoading = false;
       });
       debugPrint('Forgot password error: $e');
       debugPrintStack(stackTrace: stackTrace);
@@ -148,7 +184,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
 
                 if (response?.status == "OK") {
                   await _rememberPassword(passwordController.text);
-
+                  Navigator.of(context).pop();
                   showDialog(
                     context: context,
                     builder: (_) => Stack(
@@ -157,35 +193,40 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                           padding: const EdgeInsets.only(top: 150),
                           child: Align(
                             alignment: Alignment.topCenter,
-                            child: Container(
-                              width: width / 1.4,
-                              height: height / 3,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/transfer (2)/successful popup.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 90),
-                                  const BuildSubHeadingText(
-                                    text: "TRANSFER SUCCESSFUL",
-                                    color: Colors.white,
-                                    fontSize: 20,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                width: width / 1.4,
+                                height: height / 3,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/transfer (2)/successful popup.png"),
+                                    fit: BoxFit.cover,
                                   ),
-                                  const SizedBox(height: 20),
-                                  BuildTextWidget(
-                                    align: TextAlign.center,
-                                    text:
-                                        "You transfer the amount \n \$${amountController.text} to Player ID${playerIdController.text}",
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  )
-                                ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(height: 90),
+                                    const BuildSubHeadingText(
+                                      text: "TRANSFER SUCCESSFUL",
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    BuildTextWidget(
+                                      align: TextAlign.center,
+                                      text:
+                                          "You transfer the amount \n \$${amountController.text} to Player ID${playerIdController.text}",
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -266,14 +307,36 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                             hintText: "Password",
                                             keyboardType: TextInputType.text,
                                           ),
-                                          GestureDetector(
-                                            onTap: () => forgotPassword(),
-                                            child: const BuildTextWidget(
-                                              text: "Forgot Password",
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                            ),
-                                          ),
+                                          // GestureDetector(
+                                          //            onTap: () {
+                                          //              print("clicked");
+                                          //              forgotPassword();
+                                          //            },
+                                          //            child: const BuildTextWidget(
+                                          //              text: "Forgot Password",
+                                          //              color: Colors.white,
+                                          //              fontSize: 13,
+                                          //            ),
+                                          //          ),
+
+                                          localIsLoading
+                                              ? SizedBox(
+                                                  width: 15,
+                                                  height: 15,
+                                                  child:
+                                                      CircularProgressIndicator())
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    forgotPassword(
+                                                        setDialogState);
+                                                  },
+                                                  child: const BuildTextWidget(
+                                                    text: "Forgot Password",
+                                                    color: Colors.white,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+
                                           Row(
                                             children: [
                                               GestureDetector(
