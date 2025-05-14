@@ -302,52 +302,51 @@ class _ProfileButtonPageState extends State<ProfileButtonPage> {
                             const SizedBox(
                               width: 2,
                             ),
-                            GestureDetector(
-                              onTap: (photoStatus == "Rejected")
-                                  ? () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return FaceCheckPopup(
-                                            playerResponse:
-                                                widget.playerResponse,
-                                          );
-                                        },
-                                      );
-                                    }
-                                  : null,
-                              child: Container(
-                                height: height / 15,
-                                width: width / 2.4,
-                                decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/profilebutton/kyc_field.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: Center(
-                                    child: BuildSubHeadingText(
-                                  text: "FACE CHECK",
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                )),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 14,
-                            ),
                             Container(
                               height: height / 15,
                               width: width / 2.4,
                               decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(photoStatus == "Approved"
-                                      ? "assets/images/profilebutton/verified_button.png"
-                                      : photoStatus == "Rejected"
-                                          ? "assets/images/profilebutton/try_again_button.png"
-                                          : "assets/images/profilebutton/pending_notification.png"),
+                                image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/profilebutton/kyc_field.png"),
                                   fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Center(
+                                  child: BuildSubHeadingText(
+                                text: "FACE CHECK",
+                                fontSize: 14,
+                                color: Colors.white,
+                              )),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (photoStatus == "Rejected") {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return FaceCheckPopup(
+                                        playerResponse: widget.playerResponse,
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: Container(
+                                height: height / 15,
+                                width: width / 2.4,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(photoStatus == "Approved"
+                                        ? "assets/images/profilebutton/verified_button.png"
+                                        : photoStatus == "Rejected"
+                                            ? "assets/images/profilebutton/try_again_button.png"
+                                            : "assets/images/profilebutton/pending_notification.png"),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

@@ -3,7 +3,7 @@ import 'package:pokerpad/controller/forgot_password_controller.dart';
 import 'package:pokerpad/controller/transfer_controller.dart';
 import 'package:pokerpad/model/forgot_password_model.dart';
 import 'package:pokerpad/provider/transfer_button_provider.dart';
-import 'package:pokerpad/view/kyc_info_popUp.dart';
+import 'package:pokerpad/view/profile_button_page.dart';
 import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/transfer_forgot_password_widget.dart';
 import 'package:pokerpad/widget/transfer_history_widget.dart';
@@ -72,7 +72,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
     final request = ForgotPasswordRequestModel(
       email: widget.playerResponse?.data?.email ?? "",
     );
-
+    print("forgot request email:${request.email}");
     try {
       final response = await ForgotPasswordController().forgotPassword(request);
 
@@ -225,7 +225,9 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                 final faceRejected = photoStatus == 'rejected';
 
                 if (idRejected || faceRejected) {
-                  return KycInfoPopup();
+                  // return KycInfoPopup();
+                  return ProfileButtonPage(
+                      playerResponse: widget.playerResponse);
                 } else {
                   return Padding(
                     padding: const EdgeInsets.only(top: 50),
@@ -264,16 +266,14 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                             hintText: "Password",
                                             keyboardType: TextInputType.text,
                                           ),
-                                          isLoading
-                                              ? const CircularProgressIndicator()
-                                              : GestureDetector(
-                                                  onTap: () => forgotPassword(),
-                                                  child: const BuildTextWidget(
-                                                    text: "Forgot Password",
-                                                    color: Colors.white,
-                                                    fontSize: 13,
-                                                  ),
-                                                ),
+                                          GestureDetector(
+                                            onTap: () => forgotPassword(),
+                                            child: const BuildTextWidget(
+                                              text: "Forgot Password",
+                                              color: Colors.white,
+                                              fontSize: 13,
+                                            ),
+                                          ),
                                           Row(
                                             children: [
                                               GestureDetector(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokerpad/view/profile_button_page.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/rat_hole_controller.dart';
@@ -8,7 +9,6 @@ import '../model/rat_hole_request_model.dart';
 import '../model/rat_hole_response_model.dart';
 import '../provider/login_provider.dart';
 import 'game_view.dart';
-import 'kyc_info_popUp.dart';
 
 class GameSectionWidget extends StatefulWidget {
   final LoginResponseModel? playerResponse;
@@ -88,9 +88,11 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
 
                       if (idRejected || faceRejected) {
                         showDialog(
-                          context: context,
-                          builder: (context) => const KycInfoPopup(),
-                        );
+                            context: context,
+                            builder: (context) => ProfileButtonPage(
+                                playerResponse: widget.playerResponse)
+                            // const KycInfoPopup(),
+                            );
                         return;
                       }
                       bool success = await ratHole("100");
@@ -130,9 +132,12 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
 
                       if (idRejected || faceRejected) {
                         showDialog(
-                          context: context,
-                          builder: (context) => const KycInfoPopup(),
-                        );
+                            context: context,
+                            builder: (context) => ProfileButtonPage(
+                                playerResponse: widget.playerResponse)
+
+                            // const KycInfoPopup(),
+                            );
                         return;
                       }
                       bool success = await ratHole("200");
@@ -176,9 +181,12 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
 
                       if (idRejected || faceRejected) {
                         showDialog(
-                          context: context,
-                          builder: (context) => const KycInfoPopup(),
-                        );
+                            context: context,
+                            builder: (context) => ProfileButtonPage(
+                                playerResponse: widget.playerResponse)
+
+                            // const KycInfoPopup(),
+                            );
                         return;
                       }
                       bool success = await ratHole("500");
@@ -218,9 +226,12 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
 
                       if (idRejected || faceRejected) {
                         showDialog(
-                          context: context,
-                          builder: (context) => const KycInfoPopup(),
-                        );
+                            context: context,
+                            builder: (context) => ProfileButtonPage(
+                                playerResponse: widget.playerResponse)
+
+                            // const KycInfoPopup(),
+                            );
                         return;
                       }
                       bool success = await ratHole("1000");

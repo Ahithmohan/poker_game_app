@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokerpad/provider/cashier_button_provider.dart';
 import 'package:pokerpad/provider/login_provider.dart';
-import 'package:pokerpad/view/kyc_info_popUp.dart';
+import 'package:pokerpad/view/profile_button_page.dart';
 import 'package:pokerpad/widget/deposit_button_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +45,10 @@ class _CashierButtonWidgetState extends State<CashierButtonWidget> {
                 final idRejected = idStatus == 'rejected';
                 final faceRejected = photoStatus == 'rejected';
                 if (idRejected || faceRejected) {
-                  return const KycInfoPopup();
+                  // return const KycInfoPopup();
+                  return ProfileButtonPage(
+                    playerResponse: widget.playerResponse,
+                  );
                 } else {
                   return DepositButtonWidget(
                     playerResponse: widget.playerResponse,

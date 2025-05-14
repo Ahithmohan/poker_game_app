@@ -8,8 +8,10 @@ import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/popups/faceidentity_dark.dart';
 import 'package:pokerpad/view/kyc_loading_avatar_page.dart';
+import 'package:provider/provider.dart';
 
 import '../model/login_response_model.dart';
+import '../provider/login_provider.dart';
 
 class ImagePreviewScreenDark extends StatefulWidget {
   final LoginResponseModel? playerResponse;
@@ -37,6 +39,10 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
   }
 
   Future<void> uploadImage() async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final userId =
+        (loginProvider.playerId ?? widget.playerResponse?.data?.id.toString());
+    print(loginProvider.playerId);
     try {
       setState(() {
         _isUploading = true;
@@ -47,11 +53,12 @@ class _ImagePreviewScreenDarkState extends State<ImagePreviewScreenDark> {
       _base64String = base64String;
       log("Base64 String: $_base64String");
       // Get the userId from SignupController
-      String? userId = widget.playerResponse?.data?.id.toString();
+      // String? userId = widget.playerResponse?.data?.id.toString();
+      // widget.playerResponse?.data?.id.toString();
       // API URL
       String apiUrl =
           "http://3.6.170.253:1080/server.php/api/v1/players/$userId?XDEBUG_SESSION_START=netbeans-xdebug";
-
+      print(apiUrl);
       Map<String, dynamic> requestBody = {
         "photo": base64String,
         "id": userId,

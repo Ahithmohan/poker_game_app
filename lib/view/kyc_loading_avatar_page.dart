@@ -191,13 +191,13 @@ class _KycLoadingAvatarPageState extends State<KycLoadingAvatarPage> {
                       ? Image.asset(
                           height: 250,
                           width: 250,
-                          "assets/images/3d/ezgif.com-gif-maker (1).gif",
+                          "assets/Gifs/White PP Logo Animation.gif",
                           fit: BoxFit.fill,
                         )
                       : Image.asset(
                           height: 250,
                           width: 250,
-                          "assets/images/3d/ezgif.com-gif-maker (1).gif",
+                          "assets/Gifs/White PP Logo Animation.gif",
                           fit: BoxFit.fill,
                         ),
                   const SizedBox(
