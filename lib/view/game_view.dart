@@ -548,6 +548,18 @@ class _GameViewState extends State<GameView> {
         _showError('Failed to load game. Returning to lobby.');
         Navigator.pop(context);
       }
+
+      // if (!mounted) return;
+      //
+      // _showError('Download failed');
+      //
+      // Future.microtask(() {
+      //   if (Navigator.canPop(context)) {
+      //     Navigator.of(context).pop();
+      //   } else {
+      //     Navigator.of(context).popUntil((route) => route.isFirst);
+      //   }
+      // });
     } finally {
       if (mounted) {
         setState(() {
