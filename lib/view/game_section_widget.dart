@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokerpad/view/profile_button_page.dart';
@@ -23,25 +25,43 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
   bool isLoading = false;
   final RatHoleController ratHoleController = RatHoleController();
 
+  Future<bool> hasInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
+
   Future<bool> ratHole(String buyIn) async {
     setState(() {
       isLoading = true;
     });
+
     try {
+      // ✅ Check if internet is truly reachable
+      bool internetAvailable = await hasInternetConnection();
+      if (!internetAvailable) {
+        print("🚫 No real internet connection");
+        return false; // Do NOT show popup
+      }
+
+      // ✅ Proceed with request if internet is there
       RatHoleRequestModel request = RatHoleRequestModel(
-          roomId: '16',
-          playerId: widget.playerResponse!.data?.id,
-          buyIn: buyIn);
+        roomId: '16',
+        playerId: widget.playerResponse!.data?.id,
+        buyIn: buyIn,
+      );
+
       RatHoleResponseModel? response =
           await ratHoleController.checkRatHole(request);
-      if (response?.status == "OK") {
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //     backgroundColor: Colors.greenAccent,
-        //     content: Text(response!.status ?? "okay")));
 
-        print("rathole successfully");
+      if (response?.status == "OK") {
+        print("✅ RatHole OK");
         return true;
       } else {
+        print("❌ RatHole API failed — showing popup");
         showDialog(
           context: context,
           builder: (context) {
@@ -54,9 +74,16 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
         );
         return false;
       }
-    } catch (e) {
-      print("error$e");
+    } on SocketException catch (e) {
+      print("🚫 SocketException (caught): $e");
       return false;
+    } catch (e) {
+      print("❗ Unexpected error: $e");
+      return false;
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
