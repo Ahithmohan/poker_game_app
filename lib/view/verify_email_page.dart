@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/controller/verification_controller.dart';
@@ -7,6 +9,8 @@ import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
+import '../controller/forgot_password_controller.dart';
+import '../model/forgot_password_model.dart';
 import '../provider/login_provider.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -21,6 +25,8 @@ class VerifyEmailPage extends StatefulWidget {
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
   bool isLoading = false;
+  bool isResendEnabled = true;
+
   String? _errorText; // Error message for OTP validation
   final VerificationController _verificationController =
       VerificationController();
@@ -28,6 +34,38 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     4,
     (index) => TextEditingController(),
   );
+
+  bool localIsLoading = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isResendEnabled = true;
+  }
+
+  Future<void> forgotPassword() async {
+    setState(() {
+      localIsLoading = true;
+    });
+
+    final request = ForgotPasswordRequestModel(
+      email: widget.email ?? "",
+    );
+    print("forgot request email:${request.email}");
+    try {
+      final response = await ForgotPasswordController().forgotPassword(request);
+
+      setState(() {
+        localIsLoading = false;
+      });
+    } catch (e, stackTrace) {
+      setState(() {
+        localIsLoading = false;
+      });
+      debugPrint('Forgot password error: $e');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
 
   Future<void> verify() async {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
@@ -205,13 +243,40 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     // Resend OTP logic
+                  //   },
+                  //   child: Image.asset(
+                  //     width: width / 1.4,
+                  //     "assets/images/verifyemail/resend code button (3).png",
+                  //   ),
+                  // ),
+
                   GestureDetector(
-                    onTap: () {
-                      // Resend OTP logic
-                    },
-                    child: Image.asset(
-                      width: width / 1.4,
-                      "assets/images/verifyemail/resend code button (3).png",
+                    onTap: isResendEnabled && !localIsLoading
+                        ? () {
+                            forgotPassword();
+                            print("Resend code tapped");
+                            setState(() {
+                              isResendEnabled = false;
+                            });
+                            // Start timer to re-enable after 60 seconds
+                            Timer(const Duration(minutes: 1), () {
+                              setState(() {
+                                isResendEnabled = true;
+                              });
+                            });
+                          }
+                        : null,
+                    child: Opacity(
+                      opacity: isResendEnabled
+                          ? 1.0
+                          : 0.5, // visually indicate disabled
+                      child: Image.asset(
+                        width: width / 1.4,
+                        "assets/images/verifyemail/resend code button (3).png",
+                      ),
                     ),
                   ),
 
