@@ -414,6 +414,7 @@ class LoginProvider extends ChangeNotifier {
     isForgotLoading = true;
     notifyListeners();
     final request = ForgotPasswordRequestModel(email: emailController.text);
+    print(request.email);
     try {
       final response = await ForgotPasswordController().forgotPassword(request);
       isForgotLoading = false;

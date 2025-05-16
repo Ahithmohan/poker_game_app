@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,12 +23,14 @@ class AffiliateForgotPassword extends StatefulWidget {
 }
 
 class _AffiliateForgotPasswordState extends State<AffiliateForgotPassword> {
-  @override
+  bool isResendEnabled = true;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     forgotPassword();
+    isResendEnabled = true;
   }
 
   bool localIsLoading = false;
@@ -336,10 +340,46 @@ class _AffiliateForgotPasswordState extends State<AffiliateForgotPassword> {
                         ),
                       ),
                     ),
-                    Image.asset(
-                      width: width / 1.6,
-                      "assets/images/passwordchangeFromTransferpage/RESEND CODE.png",
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     // Handle resend code action
+                    //     forgotPassword();
+                    //     print("Resend code tapped");
+                    //   },
+                    //   child: localIsLoading
+                    //       ? const Center(child: CircularProgressIndicator())
+                    //       : Image.asset(
+                    //           width: width / 1.6,
+                    //           "assets/images/passwordchangeFromTransferpage/RESEND CODE.png",
+                    //         ),
+                    // ),
+                    GestureDetector(
+                      onTap: isResendEnabled && !localIsLoading
+                          ? () {
+                              forgotPassword();
+                              print("Resend code tapped");
+                              setState(() {
+                                isResendEnabled = false;
+                              });
+                              // Start timer to re-enable after 60 seconds
+                              Timer(const Duration(minutes: 1), () {
+                                setState(() {
+                                  isResendEnabled = true;
+                                });
+                              });
+                            }
+                          : null,
+                      child: Opacity(
+                        opacity: isResendEnabled
+                            ? 1.0
+                            : 0.5, // visually indicate disabled
+                        child: Image.asset(
+                          width: width / 1.6,
+                          "assets/images/passwordchangeFromTransferpage/RESEND CODE.png",
+                        ),
+                      ),
                     ),
+
                     SizedBox(
                       width: width / 1.24,
                       child: Form(

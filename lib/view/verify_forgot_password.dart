@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pokerpad/model/resetpassword_request_model.dart';
 import 'package:pokerpad/view/login_page.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/screen_size.dart';
 import '../controller/resetpassword_controller.dart';
+import '../provider/login_provider.dart';
 import '../widget/build_heading_widget.dart';
 import '../widget/build_text_field_widget.dart';
 
@@ -20,7 +24,16 @@ class VerifyForgotPassword extends StatefulWidget {
 
 class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
   bool passwordVisible = true;
+  bool isResendEnabled = true;
   String? errorMessage;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    isResendEnabled = true;
+  }
+
   final _formKey = GlobalKey<FormState>();
   final List<TextEditingController> _otpControllers = List.generate(
     6,
@@ -157,6 +170,8 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+    final loginProvider = Provider.of<LoginProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -243,10 +258,41 @@ class _VerifyForgotPasswordState extends State<VerifyForgotPassword> {
                     ),
                   ),
                 ),
-                Image.asset(
-                  width: width / 1.4,
-                  "assets/images/verifyemail/resend code button (3).png",
+                // GestureDetector(
+                //   onTap: () {
+                //
+                //   }, child: Image.asset(
+                //     width: width / 1.4,
+                //     "assets/images/verifyemail/resend code button (3).png",
+                //   ),
+                // ),
+                GestureDetector(
+                  onTap: isResendEnabled && !isLoading
+                      ? () {
+                          print("Resend code tapped");
+                          loginProvider.forgotPassword(context);
+                          setState(() {
+                            isResendEnabled = false;
+                          });
+                          // Start timer to re-enable after 60 seconds
+                          Timer(const Duration(minutes: 1), () {
+                            setState(() {
+                              isResendEnabled = true;
+                            });
+                          });
+                        }
+                      : null,
+                  child: Opacity(
+                    opacity: isResendEnabled
+                        ? 1.0
+                        : 0.5, // visually indicate disabled
+                    child: Image.asset(
+                      width: width / 1.6,
+                      "assets/images/passwordchangeFromTransferpage/RESEND CODE.png",
+                    ),
+                  ),
                 ),
+
                 const SizedBox(height: 25),
                 SizedBox(
                   width: width / 1.24,
