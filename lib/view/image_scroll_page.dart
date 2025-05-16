@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:pokerpad/view/front_camera_page.dart';
 import 'package:pokerpad/view/scroll_pages/accessories_page.dart';
 import 'package:pokerpad/view/scroll_pages/face_check_page.dart';
 import 'package:pokerpad/view/scroll_pages/light_page.dart';
@@ -220,33 +218,73 @@ class _ImageScrollPageState extends State<ImageScrollPage> {
                                       "assets/images/gender&avatar/page indicator_empty.png"),
                                 ],
                               ),
+                              SizedBox(
+                                height: height / 3.5,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (selectGender != null) {
+                                    _pageController.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  } else {
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   SnackBar(
+                                    //     content: const Text(
+                                    //         "Please select a gender before proceeding."),
+                                    //     backgroundColor: Colors.red,
+                                    //     duration: const Duration(seconds: 2),
+                                    //     behavior: SnackBarBehavior.floating,
+                                    //     shape: RoundedRectangleBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(12),
+                                    //     ),
+                                    //   ),
+                                    // );
+                                  }
+                                },
+                                child: Image.asset(
+                                  "assets/genderpage/confirm_btn.png",
+                                  width: width / 1.3,
+                                ),
+                              )
                             ],
                           ),
                         ),
                       ],
                     ),
-                    const FaceCheckPage(),
-                    const PosturePage(),
-                    const LightPage(),
-                    const AccessoriesPage(),
+                    FaceCheckPage(
+                      controller: _pageController,
+                    ),
+                    PosturePage(
+                      controller: _pageController,
+                    ),
+                    LightPage(
+                      controller: _pageController,
+                    ),
+                    AccessoriesPage(
+                      controller: _pageController,
+                    ),
                   ],
                 ),
               ),
               if (_showButton)
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: const FrontCameraPage(),
-                            type: PageTransitionType.rightToLeftWithFade));
-                  },
-                  child: Image.asset(
-                    "assets/images/gender&avatar/proceed to camera.png",
-                    height: 55,
-                  ),
-                ),
-              const SizedBox(height: 35),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //         context,
+                //         PageTransition(
+                //             child: const FrontCameraPage(),
+                //             type: PageTransitionType.rightToLeftWithFade));
+                //   },
+                //   child: Image.asset(
+                //     "assets/images/gender&avatar/proceed to camera.png",
+                //     height: 55,
+                //   ),
+                // ),
+                const SizedBox(height: 35),
             ],
           ),
         ],

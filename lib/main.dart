@@ -29,6 +29,7 @@ import 'controller/chartline_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await requestPermissions();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AffiliatedButtonProvider()),

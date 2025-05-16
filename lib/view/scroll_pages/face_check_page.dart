@@ -4,7 +4,9 @@ import '../../widget/build_heading_widget.dart';
 import '../../widget/build_text_widget.dart';
 
 class FaceCheckPage extends StatefulWidget {
-  const FaceCheckPage({super.key});
+  final PageController controller;
+
+  const FaceCheckPage({super.key, required this.controller});
 
   @override
   State<FaceCheckPage> createState() => _FaceCheckPageState();
@@ -67,6 +69,39 @@ class _FaceCheckPageState extends State<FaceCheckPage> {
                   Image.asset(
                       height: height / 28,
                       "assets/images/gender&avatar/page indicator_empty.png"),
+                ],
+              ),
+              SizedBox(
+                height: height / 3.5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      widget.controller.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: Image.asset(
+                      "assets/genderpage/back_btn.png",
+                      width: width / 2.5,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      widget.controller.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: Image.asset(
+                      "assets/genderpage/next_btn.png",
+                      width: width / 2.5,
+                    ),
+                  ),
                 ],
               )
             ],

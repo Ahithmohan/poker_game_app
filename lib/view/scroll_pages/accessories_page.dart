@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../widget/build_heading_widget.dart';
 import '../../widget/build_text_widget.dart';
+import '../front_camera_page.dart';
 
 class AccessoriesPage extends StatefulWidget {
-  const AccessoriesPage({super.key});
+  final PageController controller;
+
+  const AccessoriesPage({super.key, required this.controller});
 
   @override
   State<AccessoriesPage> createState() => _AccessoriesPageState();
@@ -68,7 +72,23 @@ class _AccessoriesPageState extends State<AccessoriesPage> {
                       height: height / 28,
                       "assets/images/gender&avatar/page indicator_full.png"),
                 ],
-              )
+              ),
+              SizedBox(
+                height: height / 3.5,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const FrontCameraPage(),
+                          type: PageTransitionType.rightToLeftWithFade));
+                },
+                child: Image.asset(
+                  "assets/images/gender&avatar/proceed to camera.png",
+                  height: 55,
+                ),
+              ),
             ],
           ),
         ),
