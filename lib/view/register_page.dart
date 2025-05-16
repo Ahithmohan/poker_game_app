@@ -169,6 +169,8 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
+
     final registerProvider = Provider.of<RegisterProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -184,222 +186,223 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: SingleChildScrollView(
-                child: Container(
-                  color: Colors.transparent,
-                  width: 646,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset("assets/images/register.png", width: 200),
-                      const BuildTextWidget(
-                        text: "Create your new account",
-                      ),
-                      const SizedBox(height: 40),
-                      // Login Fields
-                      Form(
-                        key: registerProvider.formKey,
-                        child: Column(
-                          children: [
-                            BuildTextFieldWidget(
-                              hintText: "Email                 ",
-                              keyboardType: TextInputType.emailAddress,
-                              controller: registerProvider.emailController,
-                              labelText: 'email',
-                              validator: registerProvider.validateEmail,
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: SingleChildScrollView(
+              child: Container(
+                color: Colors.transparent,
+                width: 646,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: height / 12,
+                    ),
+                    Image.asset("assets/images/register.png", width: 200),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    const BuildTextWidget(
+                      text: "Create your new account",
+                    ),
+                    const SizedBox(height: 20),
+                    // Login Fields
+                    Form(
+                      key: registerProvider.formKey,
+                      child: Column(
+                        children: [
+                          BuildTextFieldWidget(
+                            hintText: "Email                 ",
+                            keyboardType: TextInputType.emailAddress,
+                            controller: registerProvider.emailController,
+                            labelText: 'email',
+                            validator: registerProvider.validateEmail,
+                          ),
+                          const SizedBox(height: 5),
+                          BuildTextFieldWidget(
+                            hintText: "Password",
+                            labelText: "password",
+                            controller: registerProvider.passwordController,
+                            obscureText: !registerProvider.isPasswordVisible,
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                registerProvider.togglePasswordVisibility();
+                                // setState(() {
+                                //   passwordVisible = !passwordVisible;
+                                // });
+                              },
+                              child: registerProvider.isPasswordVisible
+                                  ? Image.asset("assets/images/Artboard 28.png",
+                                      width: 47)
+                                  : Image.asset("assets/images/Artboard 29.png",
+                                      width: 47),
                             ),
-                            const SizedBox(height: 5),
-                            BuildTextFieldWidget(
-                              hintText: "Password",
-                              labelText: "password",
-                              controller: registerProvider.passwordController,
+                            // inputFormatters: [
+                            //   LengthLimitingTextInputFormatter(8)
+                            // ],
+                            validator: registerProvider.validatePassword,
+                          ),
+                          const SizedBox(height: 5),
+                          BuildTextFieldWidget(
+                              controller:
+                                  registerProvider.confirmPasswordController,
+                              labelText: "confirm password",
+                              hintText: "Confirm password",
                               obscureText: !registerProvider.isPasswordVisible,
                               suffixIcon: GestureDetector(
                                 onTap: () {
-                                  registerProvider.togglePasswordVisibility();
                                   // setState(() {
-                                  //   passwordVisible = !passwordVisible;
+                                  //   confirmPasswordVisible =
+                                  //       !confirmPasswordVisible;
                                   // });
                                 },
-                                child: registerProvider.isPasswordVisible
+                                child: registerProvider.isPasswordMatch
                                     ? Image.asset(
-                                        "assets/images/Artboard 28.png",
+                                        "assets/images/register/Artboard 31 (2).png",
                                         width: 47)
                                     : Image.asset(
-                                        "assets/images/Artboard 29.png",
+                                        "assets/images/register/Artboard 30 (2).png",
                                         width: 47),
                               ),
+
                               // inputFormatters: [
                               //   LengthLimitingTextInputFormatter(8)
                               // ],
-                              validator: registerProvider.validatePassword,
-                            ),
-                            const SizedBox(height: 5),
-                            BuildTextFieldWidget(
-                                controller:
-                                    registerProvider.confirmPasswordController,
-                                labelText: "confirm password",
-                                hintText: "Confirm password",
-                                obscureText:
-                                    !registerProvider.isPasswordVisible,
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    // setState(() {
-                                    //   confirmPasswordVisible =
-                                    //       !confirmPasswordVisible;
-                                    // });
-                                  },
-                                  child: registerProvider.isPasswordMatch
-                                      ? Image.asset(
-                                          "assets/images/register/Artboard 31 (2).png",
-                                          width: 47)
-                                      : Image.asset(
-                                          "assets/images/register/Artboard 30 (2).png",
-                                          width: 47),
-                                ),
-
-                                // inputFormatters: [
-                                //   LengthLimitingTextInputFormatter(8)
-                                // ],
-                                validator:
-                                    registerProvider.validateConfirmPassword
-                                // (value) => validateConfirmPassword(
-                                // passwordController.text, value ?? ""),
-                                ),
-                            const SizedBox(height: 5),
-                          ],
+                              validator:
+                                  registerProvider.validateConfirmPassword
+                              // (value) => validateConfirmPassword(
+                              // passwordController.text, value ?? ""),
+                              ),
+                          const SizedBox(height: 5),
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: const TextSpan(
+                        text: 'Password must be at least ',
+                        style: TextStyle(
+                          color: Color(0xFF5F6368),
+                          fontSize: 14,
                         ),
-                      ),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                          text: 'Password must be at least ',
-                          style: TextStyle(
-                            color: Color(0xFF5F6368),
-                            fontSize: 14,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '8 characters ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'and contain ',
-                              style: TextStyle(
-                                color: Color(0xFF5F6368),
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1 number, ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1 uppercase letter, ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1 lowercase letter ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ' and ',
-                              style: TextStyle(
-                                color: Color(0xFF5F6368),
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1 symbol.',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      SizedBox(
-                        width: width / 1.4,
-                        height: 50,
-                        child: registerProvider.errorMessage != null
-                            ? Container(
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/verifyemail/alert frame.png"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    registerProvider.errorMessage!,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      registerProvider.isLoading
-                          ? const CircularProgressIndicator()
-                          : GestureDetector(
-                              onTap: () {
-                                // registerProvider.signup(context);
-                                signUp();
-                                // if (_formKey.currentState?.validate() ??
-                                //     false) {
-                                //   // signup();
-                                // }
-                              },
-                              child: Image.asset(
-                                "assets/images/sign up button.png",
-                                height: 59,
-                              ),
-                            ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const BuildTextWidget(
-                            text: "Already have an account? ",
+                          TextSpan(
+                            text: '8 characters ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                PageTransition(
-                                  child: const LoginPage(),
-                                  type: PageTransitionType.leftToRightWithFade,
-                                ),
-                              );
-                            },
-                            child: const BuildBoldTextWidget(text: "Login"),
+                          TextSpan(
+                            text: 'and contain ',
+                            style: TextStyle(
+                              color: Color(0xFF5F6368),
+                              fontSize: 14,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '1 number, ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '1 uppercase letter, ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '1 lowercase letter ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' and ',
+                            style: TextStyle(
+                              color: Color(0xFF5F6368),
+                              fontSize: 14,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '1 symbol.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 40),
+                    SizedBox(
+                      width: width / 1.4,
+                      height: 50,
+                      child: registerProvider.errorMessage != null
+                          ? Container(
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/verifyemail/alert frame.png"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  registerProvider.errorMessage!,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    registerProvider.isLoading
+                        ? const CircularProgressIndicator()
+                        : GestureDetector(
+                            onTap: () {
+                              // registerProvider.signup(context);
+                              signUp();
+                              // if (_formKey.currentState?.validate() ??
+                              //     false) {
+                              //   // signup();
+                              // }
+                            },
+                            child: Image.asset(
+                              "assets/images/sign up button.png",
+                              height: 59,
+                            ),
+                          ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const BuildTextWidget(
+                          text: "Already have an account? ",
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                child: const LoginPage(),
+                                type: PageTransitionType.leftToRightWithFade,
+                              ),
+                            );
+                          },
+                          child: const BuildBoldTextWidget(text: "Login"),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                  ],
                 ),
               ),
             ),

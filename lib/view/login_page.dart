@@ -272,227 +272,228 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Container(
-                color: Colors.transparent,
-                width: 646,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Spacer(),
-                    Image.asset(
-                      "assets/images/welcome_to_pokerpad.png",
-                    ),
-                    const SizedBox(height: 12),
-                    const BuildTextWidget(
-                      text: "Login to your account",
-                    ),
-                    const SizedBox(height: 24),
-                    // Login Fields
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          BuildTextFieldWidget(
-                            controller: loginProvider.emailController,
-                            hintText: "Email",
-                            labelText: 'email',
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter your email";
-                              } else if (!RegExp(
-                                      r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                  .hasMatch(value)) {
-                                return "Please enter a valid email";
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          BuildTextFieldWidget(
-                            labelText: "password",
-                            hintText: "Password",
-                            controller: loginProvider.passwordController,
-                            obscureText: passwordVisible,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter your password";
-                              }
-                              return null;
-                            },
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              },
-                              child: passwordVisible
-                                  ? Image.asset(
-                                      "assets/images/Artboard 28.png",
-                                      width: 47,
-                                    )
-                                  : Image.asset(
-                                      "assets/images/Artboard 29.png",
-                                      width: 47,
-                                    ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    rememberButton = !rememberButton;
-                                  });
-                                },
-                                child: rememberButton
-                                    ? Image.asset(
-                                        "assets/images/empty checkmark.png",
-                                        width: 30,
-                                      )
-                                    : Image.asset(
-                                        "assets/images/Artboard 41.png",
-                                        width: 30,
-                                      ),
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              const BuildTextWidget(
-                                text: "Remember me",
-                              )
-                            ],
-                          ),
-                          loginProvider.isForgotLoading
-                              ? const Padding(
-                                  padding: EdgeInsets.only(right: 50),
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    loginProvider.forgotPassword(context);
-                                  },
-                                  child: const BuildBoldTextWidget(
-                                      text: "Forgot password"))
-                        ],
-                      ),
-                    ),
-
-                    Consumer<LoginProvider>(
-                      builder: (context, loginProvider, child) {
-                        return SizedBox(
-                          width: width / 1.4,
-                          height: 50,
-                          child: loginProvider.errorMessage != null
-                              ? Container(
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/verifyemail/alert frame.png"),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      loginProvider.errorMessage!,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox(),
-                        );
-                      },
-                    ),
-
-                    loginProvider.isLoading
-                        ? Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              loginProvider.downloadProgress > 0
-                                  ? Column(
-                                      children: [
-                                        LinearProgressIndicator(
-                                          value: loginProvider.downloadProgress,
-                                          backgroundColor: Colors.grey[300],
-                                          color: Colors.blue,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          '${(loginProvider.downloadProgress * 100).toStringAsFixed(0)}%',
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : const CircularProgressIndicator(),
-                            ],
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              if (_formKey.currentState?.validate() ?? false) {
-                                loginProvider
-                                    .login(context); // Call the login function
-                                // _connectWebSocket();
-                              } else {
-                                print("Form is not valid");
-                              }
-                            },
-                            child: Image.asset(
-                              "assets/images/login button.png",
-                              height: 59,
-                            ),
-                          ),
-
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Container(
+              color: Colors.transparent,
+              width: 646,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: height / 12,
+                  ),
+                  Image.asset(
+                    "assets/images/welcome_to_pokerpad.png",
+                  ),
+                  const SizedBox(height: 12),
+                  const BuildTextWidget(
+                    text: "Login to your account",
+                  ),
+                  const SizedBox(height: 24),
+                  // Login Fields
+                  Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
-                        const BuildTextWidget(
-                          text: "Don’t have an account? ",
+                        BuildTextFieldWidget(
+                          controller: loginProvider.emailController,
+                          hintText: "Email",
+                          labelText: 'email',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your email";
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return "Please enter a valid email";
+                            }
+                            return null;
+                          },
                         ),
-                        GestureDetector(
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        BuildTextFieldWidget(
+                          labelText: "password",
+                          hintText: "Password",
+                          controller: loginProvider.passwordController,
+                          obscureText: passwordVisible,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your password";
+                            }
+                            return null;
+                          },
+                          suffixIcon: GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: const RegisterPage(),
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade));
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
                             },
-                            child: const BuildBoldTextWidget(text: " Sign up")),
+                            child: passwordVisible
+                                ? Image.asset(
+                                    "assets/images/Artboard 28.png",
+                                    width: 47,
+                                  )
+                                : Image.asset(
+                                    "assets/images/Artboard 29.png",
+                                    width: 47,
+                                  ),
+                          ),
+                        ),
                       ],
                     ),
-                    const Spacer(),
-                    const BuildSubHeadingText(
-                      text: "Version:2.1.0",
-                      fontSize: 10,
-                      color: Colors.black26,
-                    )
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  rememberButton = !rememberButton;
+                                });
+                              },
+                              child: rememberButton
+                                  ? Image.asset(
+                                      "assets/images/empty checkmark.png",
+                                      width: 30,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/Artboard 41.png",
+                                      width: 30,
+                                    ),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            const BuildTextWidget(
+                              text: "Remember me",
+                            )
+                          ],
+                        ),
+                        loginProvider.isForgotLoading
+                            ? const Padding(
+                                padding: EdgeInsets.only(right: 50),
+                                child: SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  loginProvider.forgotPassword(context);
+                                },
+                                child: const BuildBoldTextWidget(
+                                    text: "Forgot password"))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  Consumer<LoginProvider>(
+                    builder: (context, loginProvider, child) {
+                      return SizedBox(
+                        width: width / 1.4,
+                        height: 50,
+                        child: loginProvider.errorMessage != null
+                            ? Container(
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/verifyemail/alert frame.png"),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    loginProvider.errorMessage!,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      );
+                    },
+                  ),
+
+                  loginProvider.isLoading
+                      ? Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            loginProvider.downloadProgress > 0
+                                ? Column(
+                                    children: [
+                                      LinearProgressIndicator(
+                                        value: loginProvider.downloadProgress,
+                                        backgroundColor: Colors.grey[300],
+                                        color: Colors.blue,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${(loginProvider.downloadProgress * 100).toStringAsFixed(0)}%',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : const CircularProgressIndicator(),
+                          ],
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              loginProvider
+                                  .login(context); // Call the login function
+                              // _connectWebSocket();
+                            } else {
+                              print("Form is not valid");
+                            }
+                          },
+                          child: Image.asset(
+                            "assets/images/login button.png",
+                            height: 59,
+                          ),
+                        ),
+
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const BuildTextWidget(
+                        text: "Don’t have an account? ",
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                PageTransition(
+                                    child: const RegisterPage(),
+                                    type: PageTransitionType
+                                        .rightToLeftWithFade));
+                          },
+                          child: const BuildBoldTextWidget(text: " Sign up")),
+                    ],
+                  ),
+                  const Spacer(),
+                  const BuildSubHeadingText(
+                    text: "Version:2.1.0",
+                    fontSize: 10,
+                    color: Colors.black26,
+                  )
+                ],
               ),
             ),
           ),
