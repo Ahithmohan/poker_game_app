@@ -73,6 +73,7 @@ class _TermsPageState extends State<TermsPage> {
       );
 
       TermsResponseModel? response = await _termsController.terms(request);
+      print(response?.data?.step);
 
       if (response != null && response.status == "OK") {
         Navigator.push(

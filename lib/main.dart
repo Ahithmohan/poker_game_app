@@ -14,7 +14,6 @@ import 'package:pokerpad/provider/transfer_button_provider.dart';
 import 'package:pokerpad/view/front_camera_page.dart';
 import 'package:pokerpad/view/image_scroll_page.dart';
 import 'package:pokerpad/view/name_page.dart';
-import 'package:pokerpad/view/p_y_i_camera_page.dart';
 import 'package:pokerpad/view/phone_number_page.dart';
 import 'package:pokerpad/view/pick_avatar_page.dart';
 import 'package:pokerpad/view/pick_secondary_avatar.dart';
@@ -90,7 +89,7 @@ class MyApp extends StatelessWidget {
         '/phone': (context) => const PhoneNumberPage(),
         '/primaryAvatar': (context) => const PickAvatarPage(),
         '/secondaryAvatar': (context) => const PickSecondaryAvatar(),
-        '/kycId': (context) => const PYICameraPage(),
+        // '/kycId': (context) => const PYICameraPage(),
         '/terms': (context) => const TermsPage(),
         '/finish': (context) => const TextPage(),
       },

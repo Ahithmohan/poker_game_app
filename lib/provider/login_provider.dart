@@ -229,12 +229,12 @@ class LoginProvider extends ChangeNotifier {
         case 8:
           Navigator.pushReplacementNamed(context, '/secondaryAvatar');
           break;
+        // case 9:
+        //   Navigator.pushReplacementNamed(context, '/kycId');
+        //   break;
         case 9:
-          Navigator.pushReplacementNamed(context, '/kycId');
-          break;
-        case 10:
           Navigator.pushReplacementNamed(context, '/terms');
-
+          break;
         // case 99:
         //   Navigator.pushReplacementNamed(context, '/finish');
         //   break;

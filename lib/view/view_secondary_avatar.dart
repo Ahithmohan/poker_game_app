@@ -4,7 +4,7 @@ import 'package:pokerpad/controller/choose_avatar_controller.dart';
 import 'package:pokerpad/model/choose_avatar_request_model.dart';
 import 'package:pokerpad/model/choose_avatar_response_model.dart';
 import 'package:pokerpad/view/pick_secondary_avatar.dart';
-import 'package:pokerpad/view/proof_of_identity_screen.dart';
+import 'package:pokerpad/view/terms_page.dart';
 
 import '../widget/build_heading_widget.dart';
 
@@ -37,10 +37,15 @@ class _ViewSecondaryAvatarState extends State<ViewSecondaryAvatar> {
         //     duration: const Duration(milliseconds: 350),
         //     content:
         //         Text("Avatar upload successfully ${responseModel.status}")));
+        // Navigator.push(
+        //     context,
+        //     PageTransition(
+        //         child: const ProofOfIdentityScreen(),
+        //         type: PageTransitionType.rightToLeftWithFade));
         Navigator.push(
             context,
             PageTransition(
-                child: const ProofOfIdentityScreen(),
+                child: const TermsPage(),
                 type: PageTransitionType.rightToLeftWithFade));
       } else {
         // ScaffoldMessenger.of(context).showSnackBar(

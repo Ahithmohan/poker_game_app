@@ -301,8 +301,6 @@ import 'package:provider/provider.dart';
 
 import '../controller/rat_hole_controller.dart';
 import '../model/login_response_model.dart';
-import '../model/rat_hole_request_model.dart';
-import '../model/rat_hole_response_model.dart';
 import '../provider/login_provider.dart';
 import 'game_view.dart';
 
@@ -328,45 +326,45 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
     }
   }
 
-  Future<bool> ratHole(String buyIn) async {
-    try {
-      bool internetAvailable = await hasInternetConnection();
-      if (!internetAvailable) {
-        print("🚫 No real internet connection");
-        return false;
-      }
-
-      RatHoleRequestModel request = RatHoleRequestModel(
-        roomId: '16',
-        playerId: widget.playerResponse!.data?.id,
-        buyIn: buyIn,
-      );
-
-      RatHoleResponseModel? response =
-          await ratHoleController.checkRatHole(request);
-
-      if (response?.status == "OK") {
-        print("✅ RatHole OK");
-        return true;
-      } else {
-        print("❌ RatHole API failed — showing popup");
-        showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              backgroundColor: Colors.transparent,
-              child:
-                  Image.asset("assets/images/rathole/no retholing popup.png"),
-            );
-          },
-        );
-        return false;
-      }
-    } catch (e) {
-      print("❗ Error in ratHole: $e");
-      return false;
-    }
-  }
+  // Future<bool> ratHole(String buyIn) async {
+  //   try {
+  //     bool internetAvailable = await hasInternetConnection();
+  //     if (!internetAvailable) {
+  //       print("🚫 No real internet connection");
+  //       return false;
+  //     }
+  //
+  //     RatHoleRequestModel request = RatHoleRequestModel(
+  //       roomId: '16',
+  //       playerId: widget.playerResponse!.data?.id,
+  //       buyIn: buyIn,
+  //     );
+  //
+  //     RatHoleResponseModel? response =
+  //         await ratHoleController.checkRatHole(request);
+  //
+  //     if (response?.status == "OK") {
+  //       print("✅ RatHole OK");
+  //       return true;
+  //     } else {
+  //       print("❌ RatHole API failed — showing popup");
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) {
+  //           return Dialog(
+  //             backgroundColor: Colors.transparent,
+  //             child:
+  //                 Image.asset("assets/images/rathole/no retholing popup.png"),
+  //           );
+  //         },
+  //       );
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print("❗ Error in ratHole: $e");
+  //     return false;
+  //   }
+  // }
 
   Future<void> handleGameTap(int buyIn) async {
     if (isLoading) return;
@@ -376,6 +374,11 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
     });
 
     try {
+      bool internetAvailable = await hasInternetConnection();
+      if (!internetAvailable) {
+        print("🚫 No real internet connection");
+        return;
+      }
       final loginProvider = Provider.of<LoginProvider>(context, listen: false);
       final kyc = loginProvider.kycStatus;
 
@@ -392,8 +395,8 @@ class _GameSectionWidgetState extends State<GameSectionWidget> {
         return;
       }
 
-      bool success = await ratHole(buyIn.toString());
-      if (!mounted || !success) return;
+      // bool success = await ratHole(buyIn.toString());
+      // if (!mounted || !success) return;
 
       Navigator.push(
         context,
