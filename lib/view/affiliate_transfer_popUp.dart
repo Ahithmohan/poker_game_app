@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokerpad/view/affiliate_forgot_password.dart';
 import 'package:pokerpad/view/affiliate_transfer_history_popUp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -163,7 +164,17 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
                             isLoading
                                 ? const CircularProgressIndicator()
                                 : GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AffiliateForgotPassword(
+                                            playerResponse:
+                                                widget.playerResponse,
+                                          );
+                                        },
+                                      );
+                                    },
                                     // onTap: () => forgotPassword(),
                                     child: const BuildTextWidget(
                                       text: "Forgot Password",
