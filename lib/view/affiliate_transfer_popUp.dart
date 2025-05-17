@@ -36,6 +36,33 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
     if (widget.playerId != null) {
       playerIdController.text = widget.playerId.toString();
     }
+    _loadSavedPassword();
+  }
+
+  Future<void> _loadSavedPassword() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedPassword = prefs.getString('remembered_password');
+    if (savedPassword != null) {
+      setState(() {
+        passwordController.text = savedPassword;
+        isMarked = true;
+      });
+    }
+  }
+
+  Future<void> _rememberPassword(String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (isMarked) {
+      await prefs.setString('remembered_password', password);
+    } else {
+      await prefs.remove('remembered_password');
+    }
+  }
+
+  void toggleMarker() {
+    setState(() {
+      isMarked = !isMarked;
+    });
   }
 
   Future<void> transferAmount() async {
@@ -59,6 +86,8 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
       });
 
       if (response?.status == "OK") {
+        await _rememberPassword(passwordController.text);
+
         showDialog(
           context: context,
           builder: (_) => Stack(
@@ -186,9 +215,9 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
                               children: [
                                 GestureDetector(
                                   onTap: () async {
-                                    // setDialogState(() {
-                                    //   isMarked = !isMarked;
-                                    // });
+                                    setState(() {
+                                      isMarked = !isMarked;
+                                    });
                                     final prefs =
                                         await SharedPreferences.getInstance();
                                     if (!isMarked) {
