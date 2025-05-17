@@ -350,7 +350,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                     );
                                                   },
                                                   child: const BuildTextWidget(
-                                                    text: "Forgot Password",
+                                                    text: "Forgot password?",
                                                     color: Colors.white,
                                                     fontSize: 13,
                                                   ),
@@ -379,7 +379,7 @@ class _TransferButtonWidgetState extends State<TransferButtonWidget> {
                                                 ),
                                               ),
                                               const BuildTextWidget(
-                                                text: "Remember Password",
+                                                text: "Remember password",
                                                 color: Colors.white,
                                                 fontSize: 13,
                                               ),

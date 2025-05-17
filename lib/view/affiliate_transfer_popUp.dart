@@ -206,7 +206,7 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
                                     },
                                     // onTap: () => forgotPassword(),
                                     child: const BuildTextWidget(
-                                      text: "Forgot Password",
+                                      text: "Forgot password?",
                                       color: Colors.white,
                                       fontSize: 13,
                                     ),
@@ -232,7 +232,7 @@ class _AffiliateTransferPopupState extends State<AffiliateTransferPopup> {
                                   ),
                                 ),
                                 const BuildTextWidget(
-                                  text: "Remember Password",
+                                  text: "Remember password",
                                   color: Colors.white,
                                   fontSize: 13,
                                 ),
