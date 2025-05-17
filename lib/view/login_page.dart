@@ -8,6 +8,7 @@ import 'package:pokerpad/widget/build_sub_heading_text.dart';
 import 'package:pokerpad/widget/build_text_field_widget.dart';
 import 'package:pokerpad/widget/build_text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../provider/login_provider.dart';
 
@@ -247,6 +248,14 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    loginProvider.loadRememberedLogin().then((_) {
+      SharedPreferences.getInstance().then((prefs) {
+        setState(() {
+          rememberButton = prefs.getBool('remember_me') ?? false;
+        });
+      });
+    });
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -352,6 +361,32 @@ class _LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // Row(
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         setState(() {
+                        //           rememberButton = !rememberButton;
+                        //         });
+                        //       },
+                        //       child: rememberButton
+                        //           ? Image.asset(
+                        //               "assets/images/empty checkmark.png",
+                        //               width: 30,
+                        //             )
+                        //           : Image.asset(
+                        //               "assets/images/Artboard 41.png",
+                        //               width: 30,
+                        //             ),
+                        //     ),
+                        //     const SizedBox(
+                        //       height: 50,
+                        //     ),
+                        //     const BuildTextWidget(
+                        //       text: "Remember me",
+                        //     )
+                        //   ],
+                        // ),
                         Row(
                           children: [
                             GestureDetector(
@@ -362,22 +397,22 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               child: rememberButton
                                   ? Image.asset(
-                                      "assets/images/empty checkmark.png",
+                                      "assets/images/Artboard 41.png", // Filled checkbox when true
                                       width: 30,
                                     )
                                   : Image.asset(
-                                      "assets/images/Artboard 41.png",
+                                      "assets/images/empty checkmark.png", // Empty checkbox when false
                                       width: 30,
                                     ),
                             ),
                             const SizedBox(
-                              height: 50,
-                            ),
+                                width: 10), // Use width here instead of height
                             const BuildTextWidget(
                               text: "Remember me",
-                            )
+                            ),
                           ],
                         ),
+
                         loginProvider.isForgotLoading
                             ? const Padding(
                                 padding: EdgeInsets.only(right: 50),
@@ -394,7 +429,7 @@ class _LoginPageState extends State<LoginPage> {
                                   loginProvider.forgotPassword(context);
                                 },
                                 child: const BuildBoldTextWidget(
-                                    text: "Forgot password"))
+                                    text: "Forgot password?"))
                       ],
                     ),
                   ),
@@ -453,15 +488,38 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         )
                       : GestureDetector(
-                          onTap: () {
+                          // onTap: () {
+                          //   if (_formKey.currentState?.validate() ?? false) {
+                          //     loginProvider
+                          //         .login(context); // Call the login function
+                          //     // _connectWebSocket();
+                          //   } else {
+                          //     print("Form is not valid");
+                          //   }
+                          // },
+                          onTap: () async {
                             if (_formKey.currentState?.validate() ?? false) {
-                              loginProvider
-                                  .login(context); // Call the login function
-                              // _connectWebSocket();
+                              final loginProvider = Provider.of<LoginProvider>(
+                                  context,
+                                  listen: false);
+
+                              // Attempt login
+                              await loginProvider.login(context);
+
+                              // Handle Remember Me
+                              if (rememberButton) {
+                                await loginProvider.saveLoginInfo(
+                                  loginProvider.emailController.text,
+                                  loginProvider.passwordController.text,
+                                );
+                              } else {
+                                await loginProvider.clearLoginInfo();
+                              }
                             } else {
                               print("Form is not valid");
                             }
                           },
+
                           child: Image.asset(
                             "assets/images/login button.png",
                             height: 59,

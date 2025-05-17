@@ -58,6 +58,30 @@ class LoginProvider extends ChangeNotifier {
     print("Updated Device ID: $_deviceId");
   }
 
+  Future<void> saveLoginInfo(String email, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('saved_email', email);
+    await prefs.setString('saved_password', password);
+    await prefs.setBool('remember_me', true); // <- Save checkbox state
+  }
+
+  Future<void> clearLoginInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('saved_email');
+    await prefs.remove('saved_password');
+    await prefs.setBool('remember_me', false); // <- Clear checkbox state
+  }
+
+  Future<void> loadRememberedLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('saved_email');
+    String? password = prefs.getString('saved_password');
+    bool remember = prefs.getBool('remember_me') ?? false;
+
+    emailController.text = email ?? '';
+    passwordController.text = password ?? '';
+  }
+
   Future<void> login(BuildContext context) async {
     isLoading = true;
     notifyListeners();
