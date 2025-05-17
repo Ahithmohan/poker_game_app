@@ -8,6 +8,7 @@ import '../model/country_list.dart';
 import 'login_provider.dart';
 
 class ProfileCountryProvider extends ChangeNotifier {
+  String? errorMessage;
   String _countryCode = "+1"; // Default country code
   String _countryFlag =
       "assets/images/Country Flags/United_States_of_America_1.png"; // Default flag
@@ -39,6 +40,25 @@ class ProfileCountryProvider extends ChangeNotifier {
     _deviceId = storedDeviceId ?? "No Device ID Found";
     notifyListeners(); // Update UI
     print("Updated Device ID: $_deviceId");
+  }
+
+  bool validatePhoneNumber() {
+    if (_countryCode == "+1") {
+      if (_phoneNumber.length != 10) {
+        errorMessage = "US numbers must be exactly 10 digits.";
+        notifyListeners();
+        return false;
+      }
+    } else {
+      if (_phoneNumber.length < 5) {
+        errorMessage = "Phone number must be at least 5 digits.";
+        notifyListeners();
+        return false;
+      }
+    }
+    errorMessage = null;
+    notifyListeners();
+    return true;
   }
 
   // Update phone number

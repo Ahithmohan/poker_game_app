@@ -18,6 +18,8 @@ class CountryProvider extends ChangeNotifier {
   String _deviceId = "Fetching..."; // Default value
   bool _isLoading = false;
   String? _apiResponse;
+  String? errorMessage;
+
   List<Country> _filteredCountries = List.from(countries);
   // Getters
   String get countryCode => _countryCode;
@@ -32,6 +34,25 @@ class CountryProvider extends ChangeNotifier {
   CountryProvider() {
     _getStoredDeviceId(); // Fetch stored Device ID on provider initialization
     print("device id$_deviceId,number$phoneNumber");
+  }
+
+  bool validatePhoneNumber() {
+    if (_countryCode == "+1") {
+      if (_phoneNumber.length != 10) {
+        errorMessage = "US numbers must be exactly 10 digits.";
+        notifyListeners();
+        return false;
+      }
+    } else {
+      if (_phoneNumber.length < 5) {
+        errorMessage = "Phone number must be at least 5 digits.";
+        notifyListeners();
+        return false;
+      }
+    }
+    errorMessage = null;
+    notifyListeners();
+    return true;
   }
 
   Future<void> _getStoredDeviceId() async {

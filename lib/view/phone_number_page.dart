@@ -156,10 +156,38 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: height / 8),
+                SizedBox(
+                  height: 40,
+                ),
+                SizedBox(
+                  width: width / 1.5,
+                  height: 50,
+                  child: countryProvider.errorMessage != null
+                      ? Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/verifyemail/alert frame.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              countryProvider.errorMessage!,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
                 GestureDetector(
                   onTap: () {
-                    countryProvider.sentPhoneNumber(context);
+                    if (countryProvider.validatePhoneNumber()) {
+                      countryProvider.sentPhoneNumber(context);
+                    }
                   },
                   child: Image.asset(
                     width: width / 1.5,
