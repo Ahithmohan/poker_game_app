@@ -81,8 +81,8 @@ class _InfoButtonWidgetState extends State<InfoButtonWidget> {
                   ),
                   BuildTextWidget(
                     align: TextAlign.center,
-                    text: "The stakes vary between\$2/\$3 and \$3/\$5.\n"
-                        "All games have a big blind ante in the amount of five big blinds.\n"
+                    text: "The stakes vary between \$2/\$3 and \$3/\$5.\n"
+                        "All games have a big blind ante in the amount of two big blinds.\n"
                         "Private game stakes may differ.",
                     color: Colors.white,
                     fontSize: 13,
